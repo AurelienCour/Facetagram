@@ -6,7 +6,9 @@
 package fr.facetagram.etu.user;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,10 +16,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,7 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Utilisateur.findByEmail", query = "SELECT u FROM Utilisateur u WHERE u.email = :email")
     , @NamedQuery(name = "Utilisateur.findByMotDePasse", query = "SELECT u FROM Utilisateur u WHERE u.motDePasse = :motDePasse")
     , @NamedQuery(name = "Utilisateur.findByNom", query = "SELECT u FROM Utilisateur u WHERE u.nom = :nom")
-    , @NamedQuery(name = "Utilisateur.findByPrenom", query = "SELECT u FROM Utilisateur u WHERE u.prenom = :prenom")})
+    , @NamedQuery(name = "Utilisateur.findByPrenom", query = "SELECT u FROM Utilisateur u WHERE u.prenom = :prenom")
+    , @NamedQuery(name = "Utilisateur.findByAdmin", query = "SELECT u FROM Utilisateur u WHERE u.admin = :admin")})
 public class Utilisateur implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,6 +67,18 @@ public class Utilisateur implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "Prenom")
     private String prenom;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Admin")
+    private boolean admin;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilisateur")
+    private Collection<Image> imageCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilisateur")
+    private Collection<Aimer> aimerCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilisateur1")
+    private Collection<Amis> amisCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilisateur2")
+    private Collection<Amis> amisCollection1;
 
     public Utilisateur() {
     }
@@ -70,12 +87,13 @@ public class Utilisateur implements Serializable {
         this.idUtilisateur = idUtilisateur;
     }
 
-    public Utilisateur(Integer idUtilisateur, String email, String motDePasse, String nom, String prenom) {
+    public Utilisateur(Integer idUtilisateur, String email, String motDePasse, String nom, String prenom, boolean admin) {
         this.idUtilisateur = idUtilisateur;
         this.email = email;
         this.motDePasse = motDePasse;
         this.nom = nom;
         this.prenom = prenom;
+        this.admin = admin;
     }
 
     public Integer getIdUtilisateur() {
@@ -116,6 +134,50 @@ public class Utilisateur implements Serializable {
 
     public void setPrenom(String prenom) {
         this.prenom = prenom;
+    }
+
+    public boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    @XmlTransient
+    public Collection<Image> getImageCollection() {
+        return imageCollection;
+    }
+
+    public void setImageCollection(Collection<Image> imageCollection) {
+        this.imageCollection = imageCollection;
+    }
+
+    @XmlTransient
+    public Collection<Aimer> getAimerCollection() {
+        return aimerCollection;
+    }
+
+    public void setAimerCollection(Collection<Aimer> aimerCollection) {
+        this.aimerCollection = aimerCollection;
+    }
+
+    @XmlTransient
+    public Collection<Amis> getAmisCollection() {
+        return amisCollection;
+    }
+
+    public void setAmisCollection(Collection<Amis> amisCollection) {
+        this.amisCollection = amisCollection;
+    }
+
+    @XmlTransient
+    public Collection<Amis> getAmisCollection1() {
+        return amisCollection1;
+    }
+
+    public void setAmisCollection1(Collection<Amis> amisCollection1) {
+        this.amisCollection1 = amisCollection1;
     }
 
     @Override
