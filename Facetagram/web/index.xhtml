@@ -1,12 +1,61 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form id="formList">
+            <p:dataList value="#{utilisateurCtrl.utilisateurs}" var="etu" itemType="none">
+                <f:facet name="header">
+                    Les étudiants
+                </f:facet>
+                <p:commandLink update=":formList:etudiantDetail" oncomplete="PF('etudiantDialog').show()" title="Détails" styleClass="ui-icon ui-icon-search" style="float:left;margin-right:10px">
+                    <f:setPropertyActionListener value="#{etu}" target="#{utilisateurCtrl.selectedUser}" />
+                </p:commandLink>
+                #{etu.email}, #{etu.nom}, #{etu.prenom}
+            </p:dataList>
+            
+            <p:dialog header="Info etudiant" widgetVar="etudiantDialog">
+                <p:outputPanel id="etudiantDetail" style="text-align:center;">
+                    <p:panelGrid  columns="2" rendered="#{not empty utilisateurCtrl.selectedUser}">
+                        <h:outputText value="Identifiant" />
+                        <h:outputText value="#{utilisateurCtrl.selectedUser.email}" />
+                        
+                        <h:outputText value="Nom" />
+                        <h:inputText value="#{utilisateurCtrl.selectedUser.nom}" />
+
+                        <h:outputText value="Prenom" />
+                        <h:inputText value="#{utilisateurCtrl.selectedUser.prenom}"/>
+                    </p:panelGrid>
+                </p:outputPanel>
+                <br/>
+                <p:commandButton value="Valider" icon="ui-icon-check" ajax="false" style="margin-right:10px" action="index"/>
+                
+            </p:dialog>
+        </h:form>
+        
+        <h:form id="formAjout">
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:outputLabel for="nom">Nom :</p:outputLabel>
+                <p:inputText id="nom" value="#{utilisateurCtrl.utilisateur.nom}"/>
+                <br/>
+                <p:outputLabel for="prenom">Prenom :</p:outputLabel>
+                <p:inputText id="prenom" value="#{utilisateurCtrl.utilisateur.prenom}"/>
+                <br/>
+                <p:outputLabel for="mdp">Mot de passe :</p:outputLabel>
+                <p:inputText id="mdp" value="#{utilisateurCtrl.utilisateur.motDePasse}"/>
+                <br/>
+                <p:outputLabel for="age">Email :</p:outputLabel>
+                <p:inputText id="age" value="#{utilisateurCtrl.utilisateur.email}"/>
+                <br/>
+                <p:commandButton value="Ajouter" ajax="false" action="#{utilisateurCtrl.addUtilisateur()}"/>
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            </h:panelGrid>
+        </h:form>
     </h:body>
 </html>
 

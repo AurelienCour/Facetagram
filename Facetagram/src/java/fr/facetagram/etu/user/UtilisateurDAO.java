@@ -21,7 +21,7 @@ public class UtilisateurDAO {
      @PersistenceContext(unitName = "FacetagramPU")
     private EntityManager em;
      
-    public List<Utilisateur> allEtudiant(){
+    public List<Utilisateur> allUtilisateur(){
         Query query = em.createNamedQuery("Utilisateur.findAll");
         return query.getResultList();
     }
