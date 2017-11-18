@@ -5,6 +5,8 @@
  */
 package fr.facetagram.etu.user;
 
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -27,6 +29,8 @@ public class UtilisateurCtrl implements Serializable {
     private Utilisateur utilisateur;
     
     private Utilisateur selectedUser;
+    
+    private Boolean connecte;
 
     /**
      * Creates a new instance of UtilisateurCtrl
@@ -61,5 +65,74 @@ public class UtilisateurCtrl implements Serializable {
         this.utilisateur = new Utilisateur();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Etudiant ajouté !"));
     }
+     
+       public UtilisateurDAO getDaoUtilisateur() {
+ 
+        return daoUtilisateur;
+ 
+    }
+ 
+
+ 
+    public void setDaoUtilisateur(UtilisateurDAO daoUtilisateur) {
+ 
+        this.daoUtilisateur = daoUtilisateur;
+ 
+    }
+ 
+
+ 
+    public Boolean getConnecte() {
+ 
+        return connecte;
+ 
+    }
+ 
+
+ 
+    public void setConnecte(Boolean connecte) {
+ 
+        this.connecte = connecte;
+ 
+    }
+     
+     public void login(ActionEvent event) throws IOException {
+ 
+        List<Utilisateur> utilisateurs = getUtilisateurs();
+ 
+     
+ 
+        for(Utilisateur u : utilisateurs){
+ 
+            if(u.getEmail().equals(selectedUser.getEmail()) && u.getMotDePasse().equals(selectedUser.getMotDePasse()) ){
+ 
+                connecte = true;
+ 
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+ 
+                selectedUser = new Utilisateur();
+ 
+            }
+ 
+        }
+ 
+    }    
+ 
+    public void register(ActionEvent event) throws IOException {     
+ 
+        if(selectedUser.getEmail() != null && selectedUser.getMotDePasse()!= null) {
+ 
+            connecte = true;
+ 
+            daoUtilisateur.add(this.selectedUser);
+            
+            selectedUser = new Utilisateur();
+ 
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+ 
+        }
+ 
+    } 
+
     
 }
