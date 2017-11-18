@@ -18,7 +18,7 @@ import javax.persistence.Query;
 @Stateless
 public class UtilisateurDAO {
 
-     @PersistenceContext(unitName = "FacetagramPU")
+    @PersistenceContext(unitName = "FacetagramPU")
     private EntityManager em;
      
     public List<Utilisateur> allUtilisateur(){

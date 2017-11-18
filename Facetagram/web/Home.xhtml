@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>TODO supply a title</title>
         <link rel="stylesheet" type="text/css" href="res/css/style.css" media="all"/>
@@ -12,7 +13,6 @@
     <h:body>
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="#">About</a>
             <a href="#">Services</a>
             <a href="#">Clients</a>
             <a href="#">Contact</a>
@@ -26,13 +26,11 @@
             </div>
         </div>
         <div class="ui-g">
-            <div class="ui-g-8">
-                <p:galleria value="#{imagesView.images}" var="image" panelWidth="500" panelHeight="313" showCaption="true">
-                    <p:graphicImage name="demo/images/nature/#{image}" alt="Image Description for #{image}" title="#{image}"/>
-                </p:galleria>
+            <div class="ui-g-9">
+                
             </div>
             <div class="ui-g-3">
-                
+                #{utilisateurCtrl.connectedUser.idUtilisateur}
             </div>
         </div>
         <p:button></p:button>
