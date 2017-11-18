@@ -19,10 +19,10 @@
                 </f:facet> 
  
                 <h:outputLabel for="username" value="Email:" /> 
-                <p:inputText id="username" value="#{utilisateurCtrl.selectedUser.email}" required="true" label="username" /> 
+                <p:inputText id="username" value="#{utilisateurCtrl.connectedUser.email}" required="true" label="username" /> 
  
                 <h:outputLabel for="password" value="Mot de passe:" /> 
-                <p:password id="password" value="#{utilisateurCtrl.selectedUser.motDePasse}" required="true" label="password" /> 
+                <p:password id="password" value="#{utilisateurCtrl.connectedUser.motDePasse}" required="true" label="password" /> 
  
                 <f:facet name="footer"> 
                     <p:commandButton value="Login" ajax="false" actionListener="#{utilisateurCtrl.login(event)}"/> 
@@ -44,16 +44,16 @@
                 <h:panelGrid columns="2" cellpadding="5"> 
                      
                     <h:outputLabel for="prenom" value="Prenom:" /> 
-                    <p:inputText id="prenom" value="#{utilisateurCtrl.selectedUser.prenom}" required="true" label="prenom" /> 
+                    <p:inputText id="prenom" value="#{utilisateurCtrl.connectedUser.prenom}" required="true" label="prenom" /> 
                      
                     <h:outputLabel for="nom" value="Nom:" /> 
-                    <p:inputText id="nom" value="#{utilisateurCtrl.selectedUser.nom}" required="true" label="nom" /> 
+                    <p:inputText id="nom" value="#{utilisateurCtrl.connectedUser.nom}" required="true" label="nom" /> 
                      
                     <h:outputLabel for="email" value="Email:" /> 
-                    <p:inputText id="email" value="#{utilisateurCtrl.selectedUser.email}" required="true" label="email" /> 
+                    <p:inputText id="email" value="#{utilisateurCtrl.connectedUser.email}" required="true" label="email" /> 
                      
                     <h:outputLabel for="password" value="Mot de passe:" /> 
-                    <p:password id="password" value="#{utilisateurCtrl.selectedUser.motDePasse}" required="true" label="password" /> 
+                    <p:password id="password" value="#{utilisateurCtrl.connectedUser.motDePasse}" required="true" label="password" /> 
                      
                     <f:facet name="footer"> 
                         <p:commandButton value="Inscription" ajax="false" actionListener="#{utilisateurCtrl.register(event)}"/> 

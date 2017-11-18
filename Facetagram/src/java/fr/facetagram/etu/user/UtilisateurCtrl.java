@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -20,7 +21,7 @@ import javax.faces.context.FacesContext;
  * @author aurel
  */
 @Named(value = "utilisateurCtrl")
-@ApplicationScoped
+@SessionScoped
 public class UtilisateurCtrl implements Serializable {
     
     @EJB
@@ -30,6 +31,8 @@ public class UtilisateurCtrl implements Serializable {
     
     private Utilisateur selectedUser;
     
+    private Utilisateur connectedUser;
+    
     private Boolean connecte;
 
     /**
@@ -38,6 +41,7 @@ public class UtilisateurCtrl implements Serializable {
     public UtilisateurCtrl() {
         this.utilisateur = new Utilisateur();
         this.selectedUser = new Utilisateur();
+        this.connectedUser = new Utilisateur();
     }
 
     public Utilisateur getSelectedUser() {
@@ -87,6 +91,16 @@ public class UtilisateurCtrl implements Serializable {
         return connecte;
  
     }
+
+    public Utilisateur getConnectedUser() {
+        return connectedUser;
+    }
+
+    public void setConnectedUser(Utilisateur connectedUser) {
+        this.connectedUser = connectedUser;
+    }
+    
+    
  
 
  
@@ -104,13 +118,13 @@ public class UtilisateurCtrl implements Serializable {
  
         for(Utilisateur u : utilisateurs){
  
-            if(u.getEmail().equals(selectedUser.getEmail()) && u.getMotDePasse().equals(selectedUser.getMotDePasse()) ){
+            if(u.getEmail().equals(connectedUser.getEmail()) && u.getMotDePasse().equals(connectedUser.getMotDePasse()) ){
  
                 connecte = true;
+                
+                connectedUser = u;
  
                 FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
- 
-                selectedUser = new Utilisateur();
  
             }
  
@@ -120,13 +134,11 @@ public class UtilisateurCtrl implements Serializable {
  
     public void register(ActionEvent event) throws IOException {     
  
-        if(selectedUser.getEmail() != null && selectedUser.getMotDePasse()!= null) {
+        if(connectedUser.getEmail() != null && connectedUser.getMotDePasse()!= null) {
  
             connecte = true;
  
-            daoUtilisateur.add(this.selectedUser);
-            
-            selectedUser = new Utilisateur();
+            daoUtilisateur.add(this.connectedUser);
  
             FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
  
