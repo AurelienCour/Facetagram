@@ -34,20 +34,15 @@ public class FileUploadView {
     }
      
     public void upload() throws IOException {
-        String path= System.getProperty("user.dir"); 
-        FacesMessage message = new FacesMessage("Succesful", path + " is uploaded.");
-        FacesContext.getCurrentInstance().addMessage(null, message);
-        /*
         if(file != null) {
             InputStream input = file.getInputstream();
-            Path folder = Paths.get(path);
+            Path folder = Paths.get("C:\\Users\\aurel\\Documents\\ProjetJee\\Facetagram\\Facetagram\\web\\res");
             String filename = FilenameUtils.getBaseName(file.getFileName()); 
             String extension = FilenameUtils.getExtension(file.getFileName());
             Path file2 = Files.createTempFile(folder, filename + "-", "." + extension);
             try (InputStream input2 = file.getInputstream()) {
                 Files.copy(input2, file2, StandardCopyOption.REPLACE_EXISTING);
             }
-            
-        }*/
+        }
     }
 }
