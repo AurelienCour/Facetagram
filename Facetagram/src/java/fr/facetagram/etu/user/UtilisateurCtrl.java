@@ -8,7 +8,10 @@ package fr.facetagram.etu.user;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
@@ -32,6 +35,8 @@ public class UtilisateurCtrl implements Serializable {
     private Utilisateur selectedUser;
     
     private Utilisateur connectedUser;
+    
+    private String searchUser;
     
     private Boolean connecte;
 
@@ -60,36 +65,26 @@ public class UtilisateurCtrl implements Serializable {
         this.utilisateur = utilisateur;
     }
     
-     public List<Utilisateur> getUtilisateurs() {
+    public List<Utilisateur> getUtilisateurs() {
         return daoUtilisateur.allUtilisateur();
     }
      
-     public void addUtilisateur(){
+    public void addUtilisateur(){
         daoUtilisateur.addUtilisateur(this.utilisateur);
         this.utilisateur = new Utilisateur();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Etudiant ajouté !"));
     }
      
-       public DAO getDaoUtilisateur() {
- 
+    public DAO getDaoUtilisateur() {
         return daoUtilisateur;
- 
     }
- 
-
  
     public void setDaoUtilisateur(DAO daoUtilisateur) {
- 
         this.daoUtilisateur = daoUtilisateur;
- 
     }
  
-
- 
     public Boolean getConnecte() {
- 
         return connecte;
- 
     }
 
     public Utilisateur getConnectedUser() {
@@ -100,51 +95,55 @@ public class UtilisateurCtrl implements Serializable {
         this.connectedUser = connectedUser;
     }
     
-    
- 
-
- 
     public void setConnecte(Boolean connecte) {
- 
         this.connecte = connecte;
- 
     }
      
      public void login(ActionEvent event) throws IOException {
- 
         List<Utilisateur> utilisateurs = getUtilisateurs();
- 
-     
- 
         for(Utilisateur u : utilisateurs){
- 
             if(u.getEmail().equals(connectedUser.getEmail()) && u.getMotDePasse().equals(connectedUser.getMotDePasse()) ){
- 
                 connecte = true;
-                
                 connectedUser = u;
- 
                 FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
- 
             }
- 
         }
- 
     }    
  
     public void register(ActionEvent event) throws IOException {     
- 
         if(connectedUser.getEmail() != null && connectedUser.getMotDePasse()!= null) {
- 
             connecte = true;
- 
             daoUtilisateur.addUtilisateur(this.connectedUser);
- 
             FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
- 
         }
- 
     } 
 
+    public String getSearchUser() {
+        return searchUser;
+    }
+
+    public void setSearchUser(String searchUser) {
+        this.searchUser = searchUser;
+    }
     
+    public void searchUtilisateur(){
+        List<Utilisateur> users = daoUtilisateur.allUtilisateur();
+        List<Utilisateur> match = new ArrayList<>();
+        Pattern pattern = Pattern.compile(searchUser.toUpperCase());
+        for (Utilisateur user : users) {
+            Matcher matcher = pattern.matcher(user.getNom().toUpperCase() + " " + user.getPrenom().toUpperCase());
+            if (matcher.find())
+                match.add(user);
+            else {
+                matcher = pattern.matcher(user.getPrenom().toUpperCase() + " " + user.getNom().toUpperCase());
+                if (matcher.find())
+                    match.add(user);
+            }
+        }
+        if (match.isEmpty())
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Non"));
+        else
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Oui"));
+        searchUser = "";
+    }
 }
