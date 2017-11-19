@@ -46,9 +46,11 @@ public class DAO {
         return query.getResultList();
     }
     
-    public Amis matchedAmi(Utilisateur user1,Utilisateur user2){
+    public List<Amis> matchedAmi(Utilisateur user1,Utilisateur user2){
         Query query = em.createNamedQuery("Amis.findByTwoUsers").setParameter("idUtilisateur1", user1).setParameter("idUtilisateur2", user2);
-        return (Amis) query.getSingleResult();
+        List<Amis>  amis = query.getResultList();
+        if(amis.isEmpty()) return null;
+        else return amis;
     }
     
     public void addUtilisateur (Utilisateur user) {
