@@ -16,7 +16,7 @@ import javax.persistence.Query;
  * @author aurel
  */
 @Stateless
-public class UtilisateurDAO {
+public class DAO {
 
     @PersistenceContext(unitName = "FacetagramPU")
     private EntityManager em;
@@ -26,17 +26,22 @@ public class UtilisateurDAO {
         return query.getResultList();
     }
     
-    public void add (Utilisateur user) {
+    public void addUtilisateur (Utilisateur user) {
         em.persist(user);
         em.flush();
     }
     
-    public void update (Utilisateur user) {
+    public void addImage (Image image) {
+        em.persist(image);
+        em.flush();
+    }
+    
+    public void updateUtilisateur (Utilisateur user) {
         em.merge(user);
         em.flush();
     }
 
-    public void delete(Utilisateur user) {
+    public void deleteUtilisateur(Utilisateur user) {
         //Query query = em.createNamedQuery("Etudiant.findById").setParameter("id", etu.getId());
         //em.remove(query.getSingleResult());
         em.remove(em.merge(user));

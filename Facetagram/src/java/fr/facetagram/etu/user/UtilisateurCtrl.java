@@ -25,7 +25,7 @@ import javax.faces.context.FacesContext;
 public class UtilisateurCtrl implements Serializable {
     
     @EJB
-    private UtilisateurDAO daoUtilisateur;
+    private DAO daoUtilisateur;
     
     private Utilisateur utilisateur;
     
@@ -65,12 +65,12 @@ public class UtilisateurCtrl implements Serializable {
     }
      
      public void addUtilisateur(){
-        daoUtilisateur.add(this.utilisateur);
+        daoUtilisateur.addUtilisateur(this.utilisateur);
         this.utilisateur = new Utilisateur();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Etudiant ajouté !"));
     }
      
-       public UtilisateurDAO getDaoUtilisateur() {
+       public DAO getDaoUtilisateur() {
  
         return daoUtilisateur;
  
@@ -78,7 +78,7 @@ public class UtilisateurCtrl implements Serializable {
  
 
  
-    public void setDaoUtilisateur(UtilisateurDAO daoUtilisateur) {
+    public void setDaoUtilisateur(DAO daoUtilisateur) {
  
         this.daoUtilisateur = daoUtilisateur;
  
@@ -138,7 +138,7 @@ public class UtilisateurCtrl implements Serializable {
  
             connecte = true;
  
-            daoUtilisateur.add(this.connectedUser);
+            daoUtilisateur.addUtilisateur(this.connectedUser);
  
             FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
  
