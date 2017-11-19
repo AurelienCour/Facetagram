@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>TODO supply a title</title>
         <link rel="stylesheet" type="text/css" href="res/css/style.css" media="all"/>
@@ -35,21 +36,18 @@
                    
         </div>
         </h:form>
-        <div class="carousel" style="align-content: center;margin-top:10px;margin-left:-7px;">
-        <h:form id="form">
-            <p:galleria value="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.connectedUser)}" var="image" panelWidth="1000" panelHeight="600" showCaption="true">
-                <p:graphicImage value="res/img/#{image.cheminImage}" alt="#{image.descripton}" title="" width="1000" height="600"/>
-            </p:galleria>
-        </h:form>
-        </div>
-        
-        <h:form> 
-            <p:dataScroller value="#{dataScrollerView.cars}" var="car" chunkSize="10">
-
-                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+        <div class="ui-g profile">
+            <div class="ui-g-1"><h:outputText value="Séverin"/></div>  #{utilisateurCtrl.targetUser.prenom}
+            <div class="ui-g-1"><h:outputText value="L'hommelet"/></div>
+            <div class="ui-g-4"></div>
+            <div class="ui-g-6">
+                <p:graphicImage id="friend" value="res/Icon/friend.png"/>
+                <c:if test="#{amisCtrl.getMatchedAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}">
                     
-                </h:panelGrid>
-            </p:dataScroller>
-        </h:form>
+                </c:if>
+                      
+            </div>
+        </div>
+
     </h:body>
 </html>

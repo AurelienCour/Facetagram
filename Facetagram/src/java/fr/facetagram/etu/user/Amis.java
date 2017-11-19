@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Amis.findAll", query = "SELECT a FROM Amis a")
     , @NamedQuery(name = "Amis.findByIdAmis", query = "SELECT a FROM Amis a WHERE a.idAmis = :idAmis")
-, @NamedQuery(name = "Amis.findByIdUser", query = "SELECT a FROM Amis a WHERE a.idUtilisateur1 = :idUtilisateur OR a.idUtilisateur2 = :idUtilisateur")})
+, @NamedQuery(name = "Amis.findByIdUser", query = "SELECT a FROM Amis a WHERE a.idUtilisateur1 = :idUtilisateur OR a.idUtilisateur2 = :idUtilisateur")
+, @NamedQuery(name = "Amis.findByTwoUsers", query = "SELECT a FROM Amis a WHERE (a.idUtilisateur1 = :idUtilisateur1 AND a.idUtilisateur2 = :idUtilisateur2) OR (a.idUtilisateur1 = :idUtilisateur2 AND a.idUtilisateur2 = :idUtilisateur1)")})
 public class Amis implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,8 +47,8 @@ public class Amis implements Serializable {
     private Utilisateur idUtilisateur2;
 
     public Amis() {
-    }
-
+    }    
+            
     public Amis(Integer idAmis) {
         this.idAmis = idAmis;
     }

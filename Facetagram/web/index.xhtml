@@ -86,7 +86,6 @@
             <h:panelGrid columns="3" cellpadding="5">
                 <p:outputLabel for="recherche">Recherche :</p:outputLabel>
                 <p:inputText id="recherche" value="#{utilisateurCtrl.searchUser}"/>
-                <br/>
                 <p:commandButton value="Ajouter" ajax="false" action="#{utilisateurCtrl.searchUtilisateur()}"/>
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
             </h:panelGrid>

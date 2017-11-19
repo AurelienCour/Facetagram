@@ -36,6 +36,8 @@ public class UtilisateurCtrl implements Serializable {
     
     private Utilisateur connectedUser;
     
+    private Utilisateur targetUser;
+    
     private String searchUser;
     
     private Boolean connecte;
@@ -47,7 +49,18 @@ public class UtilisateurCtrl implements Serializable {
         this.utilisateur = new Utilisateur();
         this.selectedUser = new Utilisateur();
         this.connectedUser = new Utilisateur();
+        this.targetUser = new Utilisateur();
     }
+
+    public Utilisateur getTargetUser() {
+        return targetUser;
+    }
+
+    public void setTargetUser(Utilisateur targetUser) {
+        this.targetUser = targetUser;
+    }
+    
+    
 
     public Utilisateur getSelectedUser() {
         return selectedUser;

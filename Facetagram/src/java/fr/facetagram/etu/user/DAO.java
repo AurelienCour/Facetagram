@@ -45,6 +45,12 @@ public class DAO {
         Query query = em.createNamedQuery("Amis.findByIdUser").setParameter("idUtilisateur", user);
         return query.getResultList();
     }
+    
+    public Amis matchedAmi(Utilisateur user1,Utilisateur user2){
+        Query query = em.createNamedQuery("Amis.findByTwoUsers").setParameter("idUtilisateur1", user1).setParameter("idUtilisateur2", user2);
+        return (Amis) query.getSingleResult();
+    }
+    
     public void addUtilisateur (Utilisateur user) {
         em.persist(user);
         em.flush();

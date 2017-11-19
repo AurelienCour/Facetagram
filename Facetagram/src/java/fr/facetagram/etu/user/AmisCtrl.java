@@ -48,5 +48,14 @@ public class AmisCtrl implements Serializable   {
         return amis;
     }
     
+    public boolean getMatchedAmi(Utilisateur user1, Utilisateur user2){
+        if(dao.matchedAmi(user1, user2) != null){
+            return false;
+        }
+        
+        return true;
+    }
+        
+    
     
 }
