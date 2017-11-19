@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Image.findAll", query = "SELECT i FROM Image i")
     , @NamedQuery(name = "Image.findByIdImage", query = "SELECT i FROM Image i WHERE i.idImage = :idImage")
+    , @NamedQuery(name = "Image.findByIdUtilisateur", query = "SELECT i FROM Image i WHERE i.idUtilisateur = :idUtilisateur ORDER BY i.datePublication DESC")
     , @NamedQuery(name = "Image.findByCheminImage", query = "SELECT i FROM Image i WHERE i.cheminImage = :cheminImage")
     , @NamedQuery(name = "Image.findByNombreDeVue", query = "SELECT i FROM Image i WHERE i.nombreDeVue = :nombreDeVue")
     , @NamedQuery(name = "Image.findByDatePublication", query = "SELECT i FROM Image i WHERE i.datePublication = :datePublication")

@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -39,6 +40,10 @@ public class ImageCtrl implements Serializable  {
      */
     public ImageCtrl() {
         newImage = new Image();
+    }
+    
+    public List<Image> getImageUtilisateur(Utilisateur connectedUser){
+        return daoImage.allImageForTheUser(connectedUser);  
     }
 
     public Image getNewImage() {

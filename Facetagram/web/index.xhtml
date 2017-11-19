@@ -68,10 +68,18 @@
                 <br/>
                 <p:fileUpload value="#{imageCtrl.file}" mode="simple" skinSimple="true"/>
                 <br/>
-                <p:commandButton value="Ajouter" ajax="false" action="#{imageCtrl.upload(utilisateurCtrl.connectedUser)}"/>
+                <p:commandButton value="Ajouter" action="#{imageCtrl.upload(utilisateurCtrl.connectedUser)}"/>
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
             </h:panelGrid>
         </h:form>
+        
+        <div class="carousel">
+        <h:form id="form">
+            <p:galleria value="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.connectedUser)}" var="image" panelWidth="500" panelHeight="313" showCaption="true">
+                <p:graphicImage value="res/img/#{image.cheminImage}" alt="#{image.descripton}" title="" width="500" height="313"/>
+            </p:galleria>
+        </h:form>
+        </div>
     </h:body>
 </html>
 

@@ -5,6 +5,7 @@
  */
 package fr.facetagram.etu.user;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,6 +25,20 @@ public class DAO {
     public List<Utilisateur> allUtilisateur(){
         Query query = em.createNamedQuery("Utilisateur.findAll");
         return query.getResultList();
+    }
+    
+    public List<Image> allImageForTheUser(Utilisateur connectedUser){
+        Query query = em.createNamedQuery("Image.findByIdUtilisateur").setParameter("idUtilisateur", connectedUser);
+        List<Image> img = query.getResultList();
+        if (img.size() > 3){
+            List<Image> img2 = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                img2.add(img.get(i));
+            }
+            return img2;
+        }else
+           return img; 
+        
     }
     
     public void addUtilisateur (Utilisateur user) {
