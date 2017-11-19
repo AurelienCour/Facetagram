@@ -26,20 +26,20 @@ public class UtilisateurDAO {
         return query.getResultList();
     }
     
-    public void add (Utilisateur etu) {
-        em.persist(etu);
+    public void add (Utilisateur user) {
+        em.persist(user);
         em.flush();
     }
     
-    public void update (Utilisateur etu) {
-        em.merge(etu);
+    public void update (Utilisateur user) {
+        em.merge(user);
         em.flush();
     }
 
-    public void delete(Utilisateur etu) {
+    public void delete(Utilisateur user) {
         //Query query = em.createNamedQuery("Etudiant.findById").setParameter("id", etu.getId());
         //em.remove(query.getSingleResult());
-        em.remove(em.merge(etu));
+        em.remove(em.merge(user));
         em.flush();
     }
 }
