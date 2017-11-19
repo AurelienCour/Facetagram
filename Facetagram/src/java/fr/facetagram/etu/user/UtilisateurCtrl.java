@@ -55,19 +55,29 @@ public class UtilisateurCtrl implements Serializable {
         this.selectedUser = new Utilisateur();
         this.connectedUser = new Utilisateur();
         this.targetUser = new Utilisateur();
-        this.targetUserList = new ArrayList<>();
+        this.targetUserList = new ArrayList<Utilisateur>();
     }
     
     public List<String> complete(String query) {
+ 
         List<String> results = new ArrayList<>();
+ 
         Pattern pattern = Pattern.compile(query.toUpperCase());
+ 
         for (Utilisateur utilisateur1 : getUtilisateurs()) {
+ 
             Matcher matcher = pattern.matcher(utilisateur1.getNom().toUpperCase() + " " + utilisateur1.getPrenom().toUpperCase());
+ 
             if (matcher.find())
+ 
                 results.add(utilisateur1.getNom() + " " + utilisateur1.getPrenom());
+ 
         }
+ 
         return results;
+ 
     }
+ 
 
     public List<Utilisateur> getTargetUserList() {
         return targetUserList;
@@ -86,6 +96,13 @@ public class UtilisateurCtrl implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().redirect("userProfile.xhtml");
     }
     
+    public boolean checkImage(Image img){
+        for(Aimer a : connectedUser.getAimerCollection()){
+            if(a.getIdImage().equals(img)) return true;
+        }
+        
+        return false;    
+    }
     
 
     public Utilisateur getSelectedUser() {

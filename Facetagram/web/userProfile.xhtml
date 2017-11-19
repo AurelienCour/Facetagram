@@ -56,6 +56,32 @@
             </div>
         </div>
         
+    <h:form>
+        <p:panelGrid columns="3">
+            <c:forEach items="#{utilisateurCtrl.targetUser.imageCollection}" var="img">
+                <p:panelGrid columns="3">
+                    <f:facet name="header">
+                        <p:graphicImage name="res/img/#{img.cheminImage}" />
+                    </f:facet>
+                    <c:choose>
+                        <c:when test="#{utilisateurCtrl.checkImage(img)}">
+                            <p:graphicImage id="friend" value="res/Icon/like-red.png" style="width:60px;height: 60px;" />
+                        </c:when>
+                        <c:otherwise>
+                            <p:commandLink>
+                                <p:graphicImage id="friend" value="res/Icon/like-white.png" style="width:60px;height: 60px;" />
+                            </p:commandLink>
+                        </c:otherwise>
+                    </c:choose>
+                    <h:outputText value="#{img.aimerCollection.size}" />
+                    <h:outputText value="#{img.datePublication}"/>
+                </p:panelGrid>
+            </c:forEach>
+        </p:panelGrid>
+    </h:form>
+            
+        
+        
 
     </h:body>
 </html>
