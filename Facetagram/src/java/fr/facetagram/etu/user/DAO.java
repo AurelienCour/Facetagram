@@ -52,6 +52,11 @@ public class DAO {
         else return amis;
     }
     
+    public void addAmis (Amis ami) {
+        em.persist(ami);
+        em.flush();
+    }
+    
     public void addUtilisateur (Utilisateur user) {
         em.persist(user);
         em.flush();

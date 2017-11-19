@@ -37,25 +37,36 @@
                    
         </div>
         </h:form>
-        <div class="ui-g profile">
-            <div class="ui-g-2"><h:outputText value=" #{utilisateurCtrl.targetUser.prenom}"/></div>
-            <div class="ui-g-2"><h:outputText value=" #{utilisateurCtrl.targetUser.nom}"/></div>
-            <div class="ui-g-6"></div>
-            <div class="ui-g-2">
-                <c:choose>
-                    <c:when test="#{amisCtrl.getMatchedAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}">
-                        <p:graphicImage id="friend" value="res/Icon/friend.png" style="width:60px;height: 60px;" />
-                    </c:when>
-                    <c:otherwise>
-                        <p:commandLink action="#{amisCtrl.addAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}" onclick="setTimeout(location.reload.bind(location), 500);">
-                            <p:graphicImage id="friend" value="res/Icon/addFriend.png" style="width:60px;height: 60px;" />
-                        </p:commandLink>
-                    </c:otherwise>
-                </c:choose>
-                      
-            </div>
-        </div>
         
+        <h:form>
+        
+            <p:panelGrid class="searchPanel" columns="4" layout="grid">     
+                <f:facet name="header">
+                    <h3>Résultats de ma recherche</h3>
 
+                </f:facet>
+
+                <c:forEach items="#{utilisateurCtrl.targetUserList}" var="i">  
+                    <h:outputText value="#{i.prenom}" /> 
+                    <h:outputText value="#{i.nom}" /> 
+                    
+                    <c:choose>
+                        <c:when test="#{amisCtrl.getMatchedAmi(utilisateurCtrl.connectedUser, i)}">
+                            <p:graphicImage id="friend" value="res/Icon/friend.png" style="width:60px;height: 60px;" />
+                        </c:when>
+                        <c:otherwise>                     
+                            <p:commandLink action="#{amisCtrl.addAmi(utilisateurCtrl.connectedUser, i)}" onclick="setTimeout(location.reload.bind(location), 500);">
+                                <p:graphicImage id="addfriend" value="res/Icon/addFriend.png" style="width:60px;height: 60px;" />
+                            </p:commandLink>
+                        </c:otherwise>
+                    </c:choose>
+                    <p:commandLink action="#{utilisateurCtrl.setTargetUser(i)}">
+                        <p:graphicImage id="open" value="res/Icon/eye-open.png" style="width:60px;height: 60px;" />
+                    </p:commandLink>
+                </c:forEach>
+            </p:panelGrid>
+        </h:form>
+        
+            
     </h:body>
 </html>

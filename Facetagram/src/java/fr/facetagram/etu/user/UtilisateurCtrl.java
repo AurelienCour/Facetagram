@@ -41,6 +41,8 @@ public class UtilisateurCtrl implements Serializable {
     private int NbTotVue;
     private int NbTotLike;
     
+    private List<Utilisateur> targetUserList;
+    
     private String searchUser;
     
     private Boolean connecte;
@@ -53,14 +55,24 @@ public class UtilisateurCtrl implements Serializable {
         this.selectedUser = new Utilisateur();
         this.connectedUser = new Utilisateur();
         this.targetUser = new Utilisateur();
+        this.targetUserList = new ArrayList<Utilisateur>();
+    }
+
+    public List<Utilisateur> getTargetUserList() {
+        return targetUserList;
+    }
+
+    public void setTargetUserList(List<Utilisateur> targetUserList) {
+        this.targetUserList = targetUserList;
     }
 
     public Utilisateur getTargetUser() {
         return targetUser;
     }
 
-    public void setTargetUser(Utilisateur targetUser) {
+    public void setTargetUser(Utilisateur targetUser) throws IOException {
         this.targetUser = targetUser;
+        FacesContext.getCurrentInstance().getExternalContext().redirect("userProfile.xhtml");
     }
     
     
@@ -107,8 +119,9 @@ public class UtilisateurCtrl implements Serializable {
         return connectedUser;
     }
 
-    public void setConnectedUser(Utilisateur connectedUser) {
+    public void setConnectedUser(Utilisateur connectedUser){
         this.connectedUser = connectedUser;
+        
     }
     
     public void setConnecte(Boolean connecte) {
@@ -142,7 +155,7 @@ public class UtilisateurCtrl implements Serializable {
         this.searchUser = searchUser;
     }
     
-    public void searchUtilisateur(){
+    public void searchUtilisateur() throws IOException{
         List<Utilisateur> users = daoUtilisateur.allUtilisateur();
         List<Utilisateur> match = new ArrayList<>();
         Pattern pattern = Pattern.compile(searchUser.toUpperCase());
@@ -156,10 +169,22 @@ public class UtilisateurCtrl implements Serializable {
                     match.add(user);
             }
         }
+        
+        match.remove(this.connectedUser);
         if (match.isEmpty())
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Non"));
-        else
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Oui"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Utilisateur non trouvé"));
+        else{
+            if(match.size() == 1){ 
+                targetUser = match.get(0);
+                FacesContext.getCurrentInstance().getExternalContext().redirect("userProfile.xhtml");
+            }else{
+                
+                targetUserList = match;
+                FacesContext.getCurrentInstance().getExternalContext().redirect("userProfileList.xhtml");
+            }
+        
+        }
+            
         searchUser = "";
     }
 }

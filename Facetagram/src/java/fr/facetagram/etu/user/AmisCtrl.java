@@ -24,11 +24,19 @@ public class AmisCtrl implements Serializable   {
     @EJB
     private DAO dao;
     private List<Utilisateur> amis;
+    
 
     public AmisCtrl() {
         amis = new ArrayList<Utilisateur>();
     }
     
+    public void addAmi(Utilisateur user1,Utilisateur user2){
+        Amis ami = new Amis();
+        ami.setIdUtilisateur1(user1);
+        ami.setIdUtilisateur2(user2);
+        dao.addAmis(ami);
+        
+    }
     
     public DAO getDao() {
         return dao;
