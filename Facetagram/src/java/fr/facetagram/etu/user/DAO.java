@@ -30,9 +30,9 @@ public class DAO {
     public List<Image> allImageForTheUser(Utilisateur connectedUser){
         Query query = em.createNamedQuery("Image.findByIdUtilisateur").setParameter("idUtilisateur", connectedUser);
         List<Image> img = query.getResultList();
-        if (img.size() > 3){
+        if (img.size() > 5){
             List<Image> img2 = new ArrayList<>();
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < 5; i++) {
                 img2.add(img.get(i));
             }
             return img2;
