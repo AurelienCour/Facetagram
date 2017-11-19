@@ -38,7 +38,6 @@ public class DAO {
             return img2;
         }else
            return img; 
-        
     }
     
     public List<Amis> allAmis(Utilisateur user){

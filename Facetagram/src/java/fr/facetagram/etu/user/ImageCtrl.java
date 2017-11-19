@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -34,6 +35,8 @@ public class ImageCtrl implements Serializable  {
 
     private Image newImage;
     
+    private Image selectedImage;
+    
     private UploadedFile file;
     
     /**
@@ -45,6 +48,22 @@ public class ImageCtrl implements Serializable  {
     
     public List<Image> getImageUtilisateur(Utilisateur connectedUser){
         return daoImage.allImageForTheUser(connectedUser);  
+    }
+    
+    public List<Image> getAllImage(Utilisateur connectedUser){
+        List<Image> img = new ArrayList<>();
+        for (Amis amis : connectedUser.getAmisCollection()) {
+            if(amis.getIdUtilisateur1() != connectedUser){
+                for (Image image : amis.getIdUtilisateur1().getImageCollection()) {
+                    img.add(image);
+                } 
+            } else {
+                for (Image image : amis.getIdUtilisateur2().getImageCollection()) {
+                    img.add(image);
+                } 
+            }
+        }
+        return img;
     }
 
     public Image getNewImage() {
@@ -84,6 +103,14 @@ public class ImageCtrl implements Serializable  {
                 file = null;
             }
         }
+    }
+
+    public Image getSelectedImage() {
+        return selectedImage;
+    }
+
+    public void setSelectedImage(Image selectedImage) {
+        this.selectedImage = selectedImage;
     }
     
     

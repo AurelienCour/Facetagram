@@ -15,41 +15,64 @@
             <a href="#">Services</a>
             <a href="#">Clients</a>
             <a href="#">Contact</a>
-          </div>
+        </div>
           
         <h:form id="formRecherche">
-        <div class="ui-g header">
-            <div class="ui-g-1">
-                <span onclick="openNav()"><p:graphicImage class="navBarButton" value="res\\Icon\\menu-button.png"/></span>
-            </div>
-            <div class="ui-g-2"><p:graphicImage class="icon" value="res\\Icon\\logo.png"/></div>
-            <div class="ui-g-2 name">FaceTagram</div> 
-            
-                <div class="ui-g-5">Recherche : <p:inputText id="recherche" value="#{utilisateurCtrl.searchUser}"/>
-                    <p:commandLink action="#{utilisateurCtrl.searchUtilisateur()}">
-                        <p:graphicImage id="imageValide" value="res/Icon/checked.png" style="width:25px ;height:25px;margin-left: 5px;margin-bottom: 0;"/>
-                    </p:commandLink>
+            <div class="ui-g header">
+                <div class="ui-g-1">
+                    <span onclick="openNav()"><p:graphicImage class="navBarButton" value="res\\Icon\\menu-button.png"/></span>
                 </div>
-            
-            <div class="ui-g-2" style="font-size: 1.3em"> Bonjour #{utilisateurCtrl.connectedUser.prenom} ! </div> 
-                   
+                <div class="ui-g-2"><p:graphicImage class="icon" value="res\\Icon\\logo.png"/></div>
+                <div class="ui-g-2 name">FaceTagram</div> 
+                    <div class="ui-g-5">Recherche : <p:inputText id="recherche" value="#{utilisateurCtrl.searchUser}"/>
+                        <p:commandLink action="#{utilisateurCtrl.searchUtilisateur()}">
+                            <p:graphicImage id="imageValide" value="res/Icon/checked.png" style="width:25px ;height:25px;margin-left: 5px;margin-bottom: 0;"/>
+                        </p:commandLink>
+                    </div>
+                <div class="ui-g-2" style="font-size: 1.3em"> Bonjour #{utilisateurCtrl.connectedUser.prenom} ! </div>     
+            </div>
+        </h:form>
+        <div class="ui-g">
+            <div class="carousel" style="align-content: center;margin-top:10px;margin-left:-7px;">
+                <h:form id="form">
+                    <p:galleria value="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.connectedUser)}" var="image" panelWidth="1000" panelHeight="600" showCaption="true">
+                        <p:graphicImage value="res/img/#{image.cheminImage}" alt="#{image.descripton}" title="" width="1000" height="600"/>
+                    </p:galleria>
+                </h:form>
+            </div>
+            <div style="background-color: black;margin-top:10px;margin-left:-67px;height: 652px;width:25%;">
+                <div style="border: solid white;height: 158px;color:white;text-align: center;">
+                    NbVue
+                </div>
+                <div style="border: solid white;height: 158px;color:white;text-align: center;">
+                    NbLike
+                </div>
+                <div style="border: solid white;height: 158px;color:white;text-align: center;">
+                    NbPhoto
+                </div>
+                <div style="border: solid white;height: 157px;color:white;text-align: center;">
+                    NbAmis
+                </div>
+            </div>
         </div>
-        </h:form>
-        <div class="carousel" style="align-content: center;margin-top:10px;margin-left:-7px;">
-        <h:form id="form">
-            <p:galleria value="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.connectedUser)}" var="image" panelWidth="1000" panelHeight="600" showCaption="true">
-                <p:graphicImage value="res/img/#{image.cheminImage}" alt="#{image.descripton}" title="" width="1000" height="600"/>
-            </p:galleria>
-        </h:form>
-        </div>
-        
-        <h:form> 
-            <p:dataScroller value="#{dataScrollerView.cars}" var="car" chunkSize="10">
-
-                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                    
-                </h:panelGrid>
-            </p:dataScroller>
-        </h:form>
+        <h:form id="formImage" style="margin-top: -65px; margin-left: -7px;margin-right: 5px;">
+            <p:dataGrid var="img" value="#{imageCtrl.getAllImage(utilisateurCtrl.connectedUser)}" columns="4" layout="grid"
+            rows="12" paginator="true" id="imgs"
+            paginatorTemplate="{CurrentPageReport} {PreviousPageLink} {PageLinks} {NextPageLink}">
+                <p:panel >
+                    <h:panelGrid columns="1" style="width:100%">
+                        <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">
+                            <p:graphicImage id="imageBtn" value="res/img/#{img.cheminImage}" width="250" height="250"/>
+                            <f:setPropertyActionListener value="#{img}" target="#{imageCtrl.selectedImage}" />
+                        </p:commandLink>
+                    </h:panelGrid>
+                </p:panel>
+            </p:dataGrid>
+            <p:dialog widgetVar="imageBtn" modal="true">
+                <p:outputPanel id="ImgDetail" style="text-align:center;">
+                    <h:graphicImage value="res/img/#{imageCtrl.selectedImage.cheminImage}" width="800"/>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>    
     </h:body>
 </html>

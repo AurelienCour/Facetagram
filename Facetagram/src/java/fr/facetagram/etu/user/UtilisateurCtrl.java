@@ -38,6 +38,9 @@ public class UtilisateurCtrl implements Serializable {
     
     private Utilisateur targetUser;
     
+    private int NbTotVue;
+    private int NbTotLike;
+    
     private String searchUser;
     
     private Boolean connecte;
