@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Amis.findAll", query = "SELECT a FROM Amis a")
-    , @NamedQuery(name = "Amis.findByIdAmis", query = "SELECT a FROM Amis a WHERE a.idAmis = :idAmis")})
+    , @NamedQuery(name = "Amis.findByIdAmis", query = "SELECT a FROM Amis a WHERE a.idAmis = :idAmis")
+, @NamedQuery(name = "Amis.findByIdUser", query = "SELECT a FROM Amis a WHERE a.idUtilisateur1 = :idUtilisateur OR a.idUtilisateur2 = :idUtilisateur")})
 public class Amis implements Serializable {
 
     private static final long serialVersionUID = 1L;

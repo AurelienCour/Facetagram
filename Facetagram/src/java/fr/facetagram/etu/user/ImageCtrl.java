@@ -15,6 +15,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.apache.commons.io.FilenameUtils;
@@ -25,7 +26,7 @@ import org.primefaces.model.UploadedFile;
  * @author aurel
  */
 @Named(value = "imageCtrl")
-@ViewScoped
+@SessionScoped
 public class ImageCtrl implements Serializable  {
     
     @EJB
@@ -68,7 +69,7 @@ public class ImageCtrl implements Serializable  {
             newImage.setPublic1(false);
             newImage.setIdUtilisateur(connectedUser);
             InputStream input = file.getInputstream();
-            Path folder = Paths.get("C:\\Users\\aurel\\Documents\\ProjetJee\\Facetagram\\Facetagram\\web\\res\\img");
+            Path folder = Paths.get("/Users/severinlhommelet/jeeProject/Facetagram/Facetagram/web/res/img");
             String filename = FilenameUtils.getBaseName(file.getFileName()); 
             String extension = FilenameUtils.getExtension(file.getFileName());
             Path file2 = Files.createTempFile(folder, filename + "-", "." + extension);

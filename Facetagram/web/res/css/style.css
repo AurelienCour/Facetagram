@@ -64,8 +64,31 @@ and open the template in the editor.
     background-color: blue;
 }
 
-.TitleNavBar{
+.header{
     text-align: center;
-    background-color: #2c3e50;
-    color: white;
+    margin:-10px;
+    background-color: #ecf0f1;
+    border: solid #34495e 2px;
+    height: 10%;
+    padding-top: 3px;
+}
+.name{
+    font-family: fantasy;
+    font-size: 2em;
+}
+
+.navBarButton{
+    width:24px; 
+    height:24px; 
+    cursor:pointer;
+    margin-top: 10px;
+}
+
+.icon{
+    width:60px;
+    height: 60px;
+}
+
+.carousel{
+    margin:5%;
 }

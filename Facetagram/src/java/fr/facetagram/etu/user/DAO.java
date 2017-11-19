@@ -41,6 +41,10 @@ public class DAO {
         
     }
     
+    public List<Amis> allAmis(Utilisateur user){
+        Query query = em.createNamedQuery("Amis.findByIdUser").setParameter("idUtilisateur", user);
+        return query.getResultList();
+    }
     public void addUtilisateur (Utilisateur user) {
         em.persist(user);
         em.flush();
