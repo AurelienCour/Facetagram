@@ -78,4 +78,14 @@ public class DAO {
         em.remove(em.merge(user));
         em.flush();
     }
+    
+    public void addAimer(Aimer aimer){
+        em.persist(aimer);
+        em.flush();
+    }
+    
+    public void removeAimer(Aimer aimer){
+        em.remove(em.merge(aimer));
+        em.flush();
+    }
 }
