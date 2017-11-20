@@ -44,6 +44,7 @@ public class ImageCtrl implements Serializable  {
      */
     public ImageCtrl() {
         newImage = new Image();
+        selectedImage = new Image();
     }
     
     public List<Image> getImageUtilisateur(Utilisateur connectedUser){
@@ -113,5 +114,8 @@ public class ImageCtrl implements Serializable  {
         this.selectedImage = selectedImage;
     }
     
-    
+    public void addVue(){
+        selectedImage.setNombreDeVue(selectedImage.getNombreDeVue()+1);
+        daoImage.updateImage(selectedImage);
+    }
 }

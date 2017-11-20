@@ -71,6 +71,11 @@ public class DAO {
         em.merge(user);
         em.flush();
     }
+    
+    public void updateImage (Image img) {
+        em.merge(img);
+        em.flush();
+    }
 
     public void deleteUtilisateur(Utilisateur user) {
         //Query query = em.createNamedQuery("Etudiant.findById").setParameter("id", etu.getId());

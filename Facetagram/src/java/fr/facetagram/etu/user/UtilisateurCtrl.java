@@ -14,7 +14,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -153,6 +152,7 @@ public class UtilisateurCtrl implements Serializable {
             if(u.getEmail().equals(connectedUser.getEmail()) && u.getMotDePasse().equals(connectedUser.getMotDePasse()) ){
                 connecte = true;
                 connectedUser = u;
+                majStat();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
             }
         }
@@ -212,6 +212,13 @@ public class UtilisateurCtrl implements Serializable {
 
     public void setNbTotLike(int NbTotLike) {
         this.NbTotLike = NbTotLike;
+    }
+
+    public void majStat() {
+        for (Image image : connectedUser.getImageCollection()) {
+            setNbTotLike(getNbTotLike()+image.getAimerCollection().size());
+            setNbTotVue(getNbTotVue()+image.getNombreDeVue());
+        }
     }
     
     
