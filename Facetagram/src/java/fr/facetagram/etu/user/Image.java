@@ -27,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -180,6 +181,10 @@ public class Image implements Serializable {
             return false;
         }
         return true;
+    }
+    
+    public String getMyFormattedDate() {
+        return new SimpleDateFormat("dd-MM-yyyy").format(datePublication);
     }
 
     @Override
