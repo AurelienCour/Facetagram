@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Aimer.findAll", query = "SELECT a FROM Aimer a")
-    , @NamedQuery(name = "Aimer.findByIdAimer", query = "SELECT a FROM Aimer a WHERE a.idAimer = :idAimer")})
+    , @NamedQuery(name = "Aimer.findByIdAimer", query = "SELECT a FROM Aimer a WHERE a.idAimer = :idAimer")
+, @NamedQuery(name = "Aimer.findByIdImage", query = "SELECT a FROM Aimer a WHERE a.idImage = :idImage")})
 public class Aimer implements Serializable {
 
     private static final long serialVersionUID = 1L;

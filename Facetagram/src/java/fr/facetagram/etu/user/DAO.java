@@ -94,6 +94,11 @@ public class DAO {
         em.flush();
     }
     
+    public List<Aimer> getLikeNumber(Image img){
+        Query query = em.createNamedQuery("Aimer.findByIdImage").setParameter("idImage",img );
+        return query.getResultList();
+    }
+    
     public List<Aimer> allAimer(){
         Query query = em.createNamedQuery("Aimer.findAll");
         return query.getResultList();

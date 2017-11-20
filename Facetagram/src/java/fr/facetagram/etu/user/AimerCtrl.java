@@ -27,6 +27,7 @@ public class AimerCtrl implements Serializable {
         aimer.setIdImage(img);
         aimer.setIdUtilisateur(user);
         user.getAimerCollection().add(aimer);
+        img.getAimerCollection().add(aimer);
         dao.addAimer(aimer);
     }
     
@@ -38,11 +39,14 @@ public class AimerCtrl implements Serializable {
             if(a.getIdImage().equals(img) && a.getIdUtilisateur().equals(user))
             {
                 user.getAimerCollection().remove(a);
+                img.getAimerCollection().remove(a);
                 dao.removeAimer(a);    
             }
-        }
-
-           
+        }        
+    }
+    
+    public int getLikeNumber(Image img){
+        return dao.getLikeNumber(img).size();
     }
     
 }
