@@ -151,7 +151,7 @@ public class UtilisateurCtrl implements Serializable {
                 connecte = true;
                 connectedUser = u;
                 majStat();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("Home.xhtml");
             }
         }
     }    
@@ -160,7 +160,7 @@ public class UtilisateurCtrl implements Serializable {
         if(connectedUser.getEmail() != null && connectedUser.getMotDePasse()!= null) {
             connecte = true;
             daoUtilisateur.addUtilisateur(this.connectedUser);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("Home.xhtml");
         }
     } 
 

@@ -60,14 +60,22 @@
                                 </p:commandLink>
                             </c:otherwise>
                         </c:choose>
-                            <h:outputText value="#{aimerCtrl.getLikeNumber(img)}" />
+                        <h:outputText value="#{aimerCtrl.getLikeNumber(img)}" />
                         <h:outputText value="#{img.myFormattedDate}" />
                     </p:panelGrid>
                 </c:forEach>
             </p:panelGrid>
-            <p:dialog widgetVar="imageBtn" modal="false">
-                <p:outputPanel id="ImgDetail" style="text-align:center;">
+            <p:dialog widgetVar="imageBtn" modal="true" showEffect="clip" hideEffect="clip"  position="center,top" resizable="false" draggable="false" width="680">
+                <p:outputPanel id="ImgDetail">
                     <h:graphicImage value="res/img/#{imageCtrl.selectedImage.cheminImage}" width="650"/>
+                    <br/>
+                    <p:outputLabel for="like">Like : </p:outputLabel>
+                    <h:outputText value="#{aimerCtrl.getLikeNumber(imageCtrl.selectedImage)}" id="like"/>
+                    <br/>
+                    <p:scrollPanel style="height: 75px;" mode="native">
+                        <p:outputLabel for="Description">Description : </p:outputLabel>
+                        <h:outputText value="#{imageCtrl.selectedImage.descripton}" id="Description"/>
+                    </p:scrollPanel>
                 </p:outputPanel>
             </p:dialog>
         </h:form>
