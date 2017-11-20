@@ -88,10 +88,8 @@ public class UtilisateurCtrl implements Serializable {
     }
     
     public boolean checkImage(Image img){
-        for(Aimer a : connectedUser.getAimerCollection()){
+        for(Aimer a : connectedUser.getAimerCollection())
             if(a.getIdImage().equals(img)) return true;
-        }
-        
         return false;    
     }
     
@@ -119,7 +117,6 @@ public class UtilisateurCtrl implements Serializable {
     public void addUtilisateur(){
         daoUtilisateur.addUtilisateur(this.utilisateur);
         this.utilisateur = new Utilisateur();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Etudiant ajouté !"));
     }
      
     public DAO getDaoUtilisateur() {
@@ -216,6 +213,8 @@ public class UtilisateurCtrl implements Serializable {
     }
 
     public void majStat() {
+        setNbTotLike(0);
+        setNbTotVue(0);
         for (Image image : connectedUser.getImageCollection()) {
             setNbTotLike(getNbTotLike()+image.getAimerCollection().size());
             setNbTotVue(getNbTotVue()+image.getNombreDeVue());
