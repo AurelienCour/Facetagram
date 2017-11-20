@@ -55,27 +55,18 @@ public class UtilisateurCtrl implements Serializable {
         this.selectedUser = new Utilisateur();
         this.connectedUser = new Utilisateur();
         this.targetUser = new Utilisateur();
-        this.targetUserList = new ArrayList<Utilisateur>();
+        this.targetUserList = new ArrayList<>();
     }
     
     public List<String> complete(String query) {
- 
         List<String> results = new ArrayList<>();
- 
         Pattern pattern = Pattern.compile(query.toUpperCase());
- 
         for (Utilisateur utilisateur1 : getUtilisateurs()) {
- 
             Matcher matcher = pattern.matcher(utilisateur1.getNom().toUpperCase() + " " + utilisateur1.getPrenom().toUpperCase());
- 
             if (matcher.find())
- 
                 results.add(utilisateur1.getNom() + " " + utilisateur1.getPrenom());
- 
         }
- 
         return results;
- 
     }
  
 
@@ -191,13 +182,7 @@ public class UtilisateurCtrl implements Serializable {
             Matcher matcher = pattern.matcher(user.getNom().toUpperCase() + " " + user.getPrenom().toUpperCase());
             if (matcher.find())
                 match.add(user);
-            else {
-                matcher = pattern.matcher(user.getPrenom().toUpperCase() + " " + user.getNom().toUpperCase());
-                if (matcher.find())
-                    match.add(user);
-            }
         }
-        
         match.remove(this.connectedUser);
         if (match.isEmpty())
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Utilisateur non trouvé"));
@@ -206,13 +191,28 @@ public class UtilisateurCtrl implements Serializable {
                 targetUser = match.get(0);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("userProfile.xhtml");
             }else{
-                
                 targetUserList = match;
                 FacesContext.getCurrentInstance().getExternalContext().redirect("userProfileList.xhtml");
             }
-        
         }
-            
         searchUser = "";
     }
+
+    public int getNbTotVue() {
+        return NbTotVue;
+    }
+
+    public void setNbTotVue(int NbTotVue) {
+        this.NbTotVue = NbTotVue;
+    }
+
+    public int getNbTotLike() {
+        return NbTotLike;
+    }
+
+    public void setNbTotLike(int NbTotLike) {
+        this.NbTotLike = NbTotLike;
+    }
+    
+    
 }

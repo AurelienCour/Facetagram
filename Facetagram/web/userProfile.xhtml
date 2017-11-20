@@ -59,9 +59,9 @@
     <h:form>
         <p:panelGrid columns="3">
             <c:forEach items="#{utilisateurCtrl.targetUser.imageCollection}" var="img">
-                <p:panelGrid columns="3">
-                    <f:facet name="header">
-                        <p:graphicImage name="res/img/#{img.cheminImage}" />
+                    <p:panelGrid columns="3">
+                        <f:facet name="header">
+                        <p:graphicImage value="res/img/#{img.cheminImage}" width="200" height="200"/>
                     </f:facet>
                     <c:choose>
                         <c:when test="#{utilisateurCtrl.checkImage(img)}">
@@ -73,7 +73,7 @@
                             </p:commandLink>
                         </c:otherwise>
                     </c:choose>
-                    <h:outputText value="#{img.aimerCollection.size}" />
+                    <h:outputText value="#{img.aimerCollection.size()}" />
                     <h:outputText value="#{img.datePublication}"/>
                 </p:panelGrid>
             </c:forEach>
