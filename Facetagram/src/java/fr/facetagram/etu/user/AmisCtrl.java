@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /*
@@ -19,16 +19,15 @@ import javax.inject.Named;
  */
 
 @Named(value = "amisCtrl")
-@RequestScoped
+@SessionScoped
 public class AmisCtrl implements Serializable   {
     @EJB
     private DAO dao;
-    
     private List<Utilisateur> amis;
     
 
     public AmisCtrl() {
-        amis = new ArrayList<>();
+        amis = new ArrayList<Utilisateur>();
     }
     
     public void addAmi(Utilisateur user1,Utilisateur user2){
@@ -36,6 +35,7 @@ public class AmisCtrl implements Serializable   {
         ami.setIdUtilisateur1(user1);
         ami.setIdUtilisateur2(user2);
         dao.addAmis(ami);
+        
     }
     
     public DAO getDao() {
@@ -47,11 +47,12 @@ public class AmisCtrl implements Serializable   {
     }
     
     public List<Utilisateur> getAmis(Utilisateur user) {
-        amis = new ArrayList<>();
+        amis = new ArrayList<Utilisateur>();
         for(Amis a : dao.allAmis(user)){
             if(a.getIdUtilisateur1().equals(user)) amis.add(a.getIdUtilisateur2());
             if(a.getIdUtilisateur2().equals(user)) amis.add(a.getIdUtilisateur1());         
         }
+        
         return amis;
     }
     
@@ -59,6 +60,7 @@ public class AmisCtrl implements Serializable   {
         if(dao.matchedAmi(user1, user2) == null){
             return false;
         }
+        
         return true;
     }
         
