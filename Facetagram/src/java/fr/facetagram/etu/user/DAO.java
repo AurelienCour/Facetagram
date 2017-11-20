@@ -88,4 +88,9 @@ public class DAO {
         em.remove(em.merge(aimer));
         em.flush();
     }
+    
+    public List<Aimer> allAimer(){
+        Query query = em.createNamedQuery("Aimer.findAll");
+        return query.getResultList();
+    }
 }

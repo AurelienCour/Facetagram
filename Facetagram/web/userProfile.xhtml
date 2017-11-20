@@ -55,35 +55,38 @@
                       
             </div>
         </div>
-        
-    <h:form>
-        <p:panelGrid columns="3" style="margin: 20px;">
-            <c:forEach items="#{utilisateurCtrl.targetUser.imageCollection}" var="img">
-                <p:panelGrid columns="3">
-                    <f:facet name="header">
-                        <p:graphicImage value="res/img/#{img.cheminImage}" />
-                    </f:facet>
-                    <c:choose>
-                        <c:when test="#{utilisateurCtrl.checkImage(img)}">
-                            <p:commandLink action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" onclick="setTimeout(location.reload.bind(location), 500);">
-                                <p:graphicImage id="friend" value="res/Icon/like-red.png" style="width:60px;height: 60px;" />
-                            </p:commandLink>
-                        </c:when>
-                        <c:otherwise>
-                            <p:commandLink action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}" onclick="setTimeout(location.reload.bind(location), 500);">
-                                <p:graphicImage id="friend" value="res/Icon/like-white.png" style="width:60px;height: 60px;" />
-                            </p:commandLink>
-                        </c:otherwise>
-                    </c:choose>
-                    <h:outputText value="#{img.aimerCollection.size()}" />
-                    <h:outputText value="#{img.datePublication}"/>
-                </p:panelGrid>
-            </c:forEach>
-        </p:panelGrid>
-    </h:form>
-            
-        
-        
-
+        <h:form id="formImage">
+            <p:panelGrid columns="4">
+                <c:forEach items="#{utilisateurCtrl.targetUser.imageCollection}" var="img">
+                        <p:panelGrid columns="3">
+                            <f:facet name="header">
+                                <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">
+                                    <p:graphicImage value="res/img/#{img.cheminImage}" width="300" height="200"/>
+                                    <f:setPropertyActionListener value="#{img}" target="#{imageCtrl.selectedImage}" />
+                                </p:commandLink>
+                            </f:facet>
+                        <c:choose>
+                            <c:when test="#{utilisateurCtrl.checkImage(img)}">
+                                <p:commandLink action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" onclick="setTimeout(location.reload.bind(location), 500);">
+                                    <p:graphicImage id="friend" value="res/Icon/like-red.png" style="width:60px;height: 60px;" />
+                                </p:commandLink>
+                            </c:when>
+                            <c:otherwise>
+                                <p:commandLink action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}" onclick="setTimeout(location.reload.bind(location), 500);">
+                                    <p:graphicImage id="friend" value="res/Icon/like-white.png" style="width:60px;height: 60px;" />
+                                </p:commandLink>
+                            </c:otherwise>
+                        </c:choose>
+                        <h:outputText value="#{img.aimerCollection.size()}" />
+                        <h:outputText value="#{img.myFormattedDate}" />
+                    </p:panelGrid>
+                </c:forEach>
+            </p:panelGrid>
+            <p:dialog widgetVar="imageBtn" modal="false">
+                <p:outputPanel id="ImgDetail" style="text-align:center;">
+                    <h:graphicImage value="res/img/#{imageCtrl.selectedImage.cheminImage}" width="650"/>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
     </h:body>
 </html>

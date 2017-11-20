@@ -22,9 +22,11 @@ public class AimerCtrl implements Serializable {
     private DAO dao;
     
     public void addAimer(Utilisateur user, Image img){
+        
         Aimer aimer = new Aimer();
         aimer.setIdImage(img);
         aimer.setIdUtilisateur(user);
+        user.getAimerCollection().add(aimer);
         dao.addAimer(aimer);
     }
     
@@ -32,7 +34,15 @@ public class AimerCtrl implements Serializable {
         Aimer aimer = new Aimer();
         aimer.setIdImage(img);
         aimer.setIdUtilisateur(user);
-        dao.removeAimer(aimer);
+        for (Aimer a : dao.allAimer()){
+            if(a.getIdImage().equals(img) && a.getIdUtilisateur().equals(user))
+            {
+                user.getAimerCollection().remove(a);
+                dao.removeAimer(a);    
+            }
+        }
+
+           
     }
     
 }
