@@ -7,10 +7,10 @@
     xmlns:p="http://primefaces.org/ui">
 
     <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"></a>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
             <a href="Home.xhtml">Home</a>
             <a href="myProfile.xhtml">Mon profile</a>
-            <a href="#">Contact</a>
+            <h:outputLink value="javascript:void(0)" onclick="PF('addImage').show();" title="addImage">Ajouter une image</h:outputLink>
           </div>
           
        <h:form id="formRecherche">
@@ -35,5 +35,20 @@
                 </div>     
             </div>
         </h:form>
+    
+        <h:form enctype="multipart/form-data">
+            <p:dialog header="Inscription" widgetVar="addImage" resizable="false"> 
+                <h:panelGrid columns="3" cellpadding="5">
+                    <p:outputLabel for="Description">Description :</p:outputLabel>
+                    <p:inputText id="Description" value="#{imageCtrl.newImage.descripton}"/>
+                    <br/>
+                    <p:fileUpload value="#{imageCtrl.file}" mode="simple" skinSimple="true"/>
+                    <br/>
+                    <p:commandButton value="Ajouter" ajax="false" action="#{imageCtrl.upload(utilisateurCtrl.connectedUser)}"/>
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
 
 </ui:composition>

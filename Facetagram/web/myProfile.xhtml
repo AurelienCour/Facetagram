@@ -22,27 +22,73 @@
     </div>
 
 
-    <h3 style="font-weight: bold;font-size: 2em;">MES AMIS</h3> 
+    <h3 class="profile-title">MES AMIS</h3> 
     <hr></hr>    
-    <div style="margin-top: 5%;font-size: 1.4em">
+    <div style="margin-top: 5%;font-size: 1em">
         <p:panelGrid columns="2" layout="grid" style="font-size:1.4em;">   
             <h:outputText value="Prenom" style="font-weight: bold;font-size: 1.6em;"/> 
             <h:outputText value="Nom" style="font-weight: bold;font-size: 1.6em;"/> 
 
         <c:forEach items="#{amisCtrl.getAmis(utilisateurCtrl.connectedUser)}" var = "a" >
 
-            <h:outputText value="#{a.prenom}"/> 
-            <h:outputText value="#{a.nom}" style="font-weight: bold"/> 
+            <div class="ui-g-2"><h:outputText value="#{a.prenom}"/></div>
+            <div class="ui-g-2"><h:outputText value="#{a.nom}" style="font-weight: bold"/></div>
+            <div class="ui-g-6"></div>
+            <div class="ui-g-2">
+                <h:outputLink value="javascript:void(0)" onclick="PF('addImage').show();" title="addImage">Ajouter une image</h:outputLink>
+            </div>
         </c:forEach>
         </p:panelGrid>
     </div>
-        
-        
-        
-        
+    
+    <h3 class="profile-title">MES INFORMATIONS</h3> 
+    <hr></hr> 
+    <div style="margin-top: 5%;font-size: 1em">
+        <p:panelGrid columns="2" layout="grid" style="font-size:1.4em;">   
+            <h:outputText value="Email : " style="font-weight: bold;font-size: 1.6em;"/> 
+            <h:outputText value="#{utilisateurCtrl.connectedUser.email}" style="font-weight: bold;font-size: 1.6em;"/> 
+            <h:outputText value="Mot de passe : " style="font-weight: bold;font-size: 1.6em;"/> 
+            <h:outputText value="#{utilisateurCtrl.connectedUser.motDePasse}" style="font-weight: bold;font-size: 1.6em;"/> 
+        </p:panelGrid>
+    </div>
+    
+    <h3 class="profile-title">MES IMAGES</h3> 
+    <hr></hr> 
+    <h:form id="formImage">
+        <p:panelGrid columns="4">
+            <c:forEach items="#{utilisateurCtrl.connectedUser.imageCollection}" var="img">
+                    <p:panelGrid columns="2">
+                        <f:facet name="header">
+                            <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">
+                                <p:graphicImage value="res/img/#{img.cheminImage}" width="300" height="200"/>
+                            </p:commandLink>
+                        </f:facet>
+                        <h:outputText value="#{aimerCtrl.getLikeNumber(img)}" />
+                    <h:outputText value="#{img.myFormattedDate}" />
+                </p:panelGrid>
+            </c:forEach>
+        </p:panelGrid>
+        <p:dialog widgetVar="imageBtn" modal="false">
+            <p:outputPanel id="ImgDetail" style="text-align:center;">
+                <h:graphicImage value="res/img/#{imageCtrl.selectedImage.cheminImage}" width="650"/>
+            </p:outputPanel>
+        </p:dialog>
+    </h:form>
+    
+    <h:form enctype="multipart/form-data">
+        <p:dialog header="Inscription" widgetVar="addImage" resizable="false"> 
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:outputLabel for="Description">Description :</p:outputLabel>
+                <p:inputText id="Description" value="#{imageCtrl.newImage.descripton}"/>
+                <br/>
+                <p:fileUpload value="#{imageCtrl.file}" mode="simple" skinSimple="true"/>
+                <br/>
+                <p:commandButton value="Ajouter" ajax="false" action="#{imageCtrl.upload(utilisateurCtrl.connectedUser)}"/>
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            </h:panelGrid>
+        </p:dialog>
+    </h:form>
 
-
-        <p:button style="display:none;"/>
     </h:body>
 </html>
 

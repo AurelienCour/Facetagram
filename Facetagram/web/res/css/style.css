@@ -108,3 +108,21 @@ and open the template in the editor.
     text-align:center;
     padding:2%;
 }
+
+hr{
+  float:left;
+  margin-bottom: 20px;
+  margin-top: 0;
+  width: 80%;
+  height: 2px;
+  background-color: #34495e;
+  border: none; /*on supprime le style par défaut*/
+}
+
+.profile-title{
+    font-weight: bold;
+    font-size: 1.8em;
+    color:#34495e;
+    margin-top: 50px;
+    margin-bottom: 0;
+}
