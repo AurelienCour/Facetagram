@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.model.UploadedFile;
 
@@ -27,7 +26,7 @@ import org.primefaces.model.UploadedFile;
  * @author aurel
  */
 @Named(value = "imageCtrl")
-@SessionScoped
+@RequestScoped
 public class ImageCtrl implements Serializable  {
     
     @EJB
@@ -51,19 +50,12 @@ public class ImageCtrl implements Serializable  {
         return daoImage.allImageForTheUser(connectedUser);  
     }
     
-    public List<Image> getAllImage(Utilisateur connectedUser){
+    public List<Image> getAllImage(List<Utilisateur> amis){
         List<Image> img = new ArrayList<>();
-        for (Amis amis : connectedUser.getAmisCollection()) {
-            if(amis.getIdUtilisateur1() != connectedUser){
-                for (Image image : amis.getIdUtilisateur1().getImageCollection()) {
-                    img.add(image);
-                } 
-            } else {
-                for (Image image : amis.getIdUtilisateur2().getImageCollection()) {
-                    img.add(image);
-                } 
-            }
-        }
+        for (Utilisateur ami : amis) {
+             for (Image image : ami.getImageCollection())
+                 img.add(image);
+         } 
         return img;
     }
 

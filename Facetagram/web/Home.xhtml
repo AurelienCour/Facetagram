@@ -59,13 +59,13 @@
                     #{utilisateurCtrl.connectedUser.imageCollection.size()} PHOTOS
                 </div>
                 <div style="border: solid white;height: 157px;color:white;text-align: center;">
-                    #{utilisateurCtrl.connectedUser.amisCollection.size()} AMIS
+                    #{amisCtrl.getAmis(utilisateurCtrl.connectedUser).size()} AMIS
                 </div>
             </div>
         </div>
         <h:form id="formImage">
             <p:panelGrid columns="4">
-                <c:forEach items="#{imageCtrl.getAllImage(utilisateurCtrl.connectedUser)}" var="img">
+                <c:forEach items="#{imageCtrl.getAllImage(amisCtrl.getAmis(utilisateurCtrl.connectedUser))}" var="img">
                         <p:panelGrid columns="3">
                             <f:facet name="header">
                                 <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show();" action="#{imageCtrl.addVue()}">

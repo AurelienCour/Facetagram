@@ -215,6 +215,8 @@ public class UtilisateurCtrl implements Serializable {
     }
 
     public void majStat() {
+        setNbTotLike(0);
+        setNbTotVue(0);
         for (Image image : connectedUser.getImageCollection()) {
             setNbTotLike(getNbTotLike()+image.getAimerCollection().size());
             setNbTotVue(getNbTotVue()+image.getNombreDeVue());
