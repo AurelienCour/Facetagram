@@ -36,12 +36,12 @@ public class AimerCtrl implements Serializable {
         Aimer aimer = new Aimer();
         aimer.setIdImage(img);
         aimer.setIdUtilisateur(user);
-        for (Aimer a : dao.allAimer()){
-            if(a.getIdImage().equals(img) && a.getIdUtilisateur().equals(user))
+        for (Aimer ai : dao.allAimer()){
+            if(ai.getIdImage().equals(img) && ai.getIdUtilisateur().equals(user))
             {
-                user.getAimerCollection().remove(a);
-                img.getAimerCollection().remove(a);
-                dao.removeAimer(a);    
+                user.getAimerCollection().remove(ai);
+                img.getAimerCollection().remove(ai);
+                dao.removeAimer(ai);    
             }
         }        
     }

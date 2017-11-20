@@ -222,7 +222,6 @@ public class UtilisateurCtrl implements Serializable {
     }
     
     public void logout() throws IOException{
-        connectedUser = new Utilisateur();
         FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
     }
     
