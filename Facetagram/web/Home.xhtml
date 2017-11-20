@@ -43,22 +43,24 @@
                 <c:forEach items="#{imageCtrl.getAllImage(amisCtrl.getAmis(utilisateurCtrl.connectedUser))}" var="img">
                         <p:panelGrid columns="3">
                             <f:facet name="header">
-                                <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show();" action="#{imageCtrl.addVue()}">
+                                <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">
                                     <p:graphicImage value="res/img/#{img.cheminImage}" width="300" height="200"/>
                                     <f:setPropertyActionListener value="#{img}" target="#{imageCtrl.selectedImage}" />
                                 </p:commandLink>
                             </f:facet>
                         <c:choose>
                             <c:when test="#{utilisateurCtrl.checkImage(img)}">
-                                <p:graphicImage id="friend" value="res/Icon/like-red.png" style="width:60px;height: 60px;" />
+                                <p:commandLink action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" onclick="setTimeout(location.reload.bind(location), 500);">
+                                    <p:graphicImage id="friend" value="res/Icon/like-red.png" style="width:60px;height: 60px;" />
+                                </p:commandLink>
                             </c:when>
                             <c:otherwise>
-                                <p:commandLink>
+                                <p:commandLink action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}" onclick="setTimeout(location.reload.bind(location), 500);">
                                     <p:graphicImage id="friend" value="res/Icon/like-white.png" style="width:60px;height: 60px;" />
                                 </p:commandLink>
                             </c:otherwise>
                         </c:choose>
-                        <h:outputText value="#{img.aimerCollection.size()} likes" />
+                            <h:outputText value="#{aimerCtrl.getLikeNumber(img)}" />
                         <h:outputText value="#{img.myFormattedDate}" />
                     </p:panelGrid>
                 </c:forEach>

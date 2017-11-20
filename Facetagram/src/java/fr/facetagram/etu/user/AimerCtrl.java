@@ -23,7 +23,6 @@ public class AimerCtrl implements Serializable {
     private DAO dao;
     
     public void addAimer(Utilisateur user, Image img){
-        
         Aimer aimer = new Aimer();
         aimer.setIdImage(img);
         aimer.setIdUtilisateur(user);

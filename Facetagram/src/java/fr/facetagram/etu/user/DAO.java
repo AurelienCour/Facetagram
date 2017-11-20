@@ -99,6 +99,11 @@ public class DAO {
         return query.getResultList();
     }
     
+    public List<Aimer> getAimerUtilisateur(Utilisateur user){
+        Query query = em.createNamedQuery("Aimer.findByIdUtilisateur").setParameter("idUtilisateur",user );
+        return query.getResultList();
+    }
+    
     public List<Aimer> allAimer(){
         Query query = em.createNamedQuery("Aimer.findAll");
         return query.getResultList();

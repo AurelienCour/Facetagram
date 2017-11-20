@@ -88,7 +88,7 @@ public class UtilisateurCtrl implements Serializable {
     }
     
     public boolean checkImage(Image img){
-        for(Aimer a : connectedUser.getAimerCollection())
+        for(Aimer a : daoUtilisateur.getAimerUtilisateur(connectedUser))
             if(a.getIdImage().equals(img)) return true;
         return false;    
     }
