@@ -14,7 +14,7 @@
     <h:body>
         
         <ui:include src="header.xhtml" />
-
+        
         <div class="ui-g profile">
             <div class="ui-g-2"><h:outputText value=" #{utilisateurCtrl.targetUser.prenom}"/></div>
             <div class="ui-g-2"><h:outputText value=" #{utilisateurCtrl.targetUser.nom}"/></div>
@@ -22,17 +22,20 @@
             <div class="ui-g-2">
                 <c:choose>
                     <c:when test="#{amisCtrl.getMatchedAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}">
-                        <p:graphicImage id="friend" value="res/Icon/friend.png" style="width:60px;height: 60px;" />
+                        <p:graphicImage class="friend" value="res/Icon/friend.png"/>
+                        <p:commandLink action="#{amisCtrl.removeAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}" onclick="setTimeout(location.reload.bind(location), 500);">
+                            <p:graphicImage id="removeFriend" value="res/Icon/remove-user.png" style="width:60px;height: 60px;" />
+                        </p:commandLink>
                     </c:when>
                     <c:otherwise>
                         <p:commandLink action="#{amisCtrl.addAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}" onclick="setTimeout(location.reload.bind(location), 500);">
-                            <p:graphicImage id="friend" value="res/Icon/addFriend.png" style="width:60px;height: 60px;" />
+                            <p:graphicImage class="friend" value="res/Icon/addFriend.png"/>
                         </p:commandLink>
                     </c:otherwise>
-                </c:choose>
-                      
+                </c:choose>                      
             </div>
         </div>
+       
         <h:form id="formImage">
             <p:panelGrid columns="4">
                 <c:forEach items="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.targetUser)}" var="img">

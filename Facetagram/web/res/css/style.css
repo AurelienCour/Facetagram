@@ -96,8 +96,34 @@ and open the template in the editor.
     height: 60px;
 }
 
+.container-top-home{
+    background: #34495e;
+    padding:0;
+}
+
 .carousel{
-    margin:5%;
+    height:50%;
+    margin-left: -30px;
+}
+
+.container-counter{
+    color:white;
+}
+
+.counter{
+    height:160px;
+    padding: auto;
+    border-bottom: solid #9b59b6 4px;
+}
+
+#formImage{
+    background : #34495e;
+    padding: 5%;
+}
+
+.imageAmis{
+    margin-top: 20px;
+    
 }
 
 .profile{
@@ -129,4 +155,10 @@ hr{
     font-weight: bold;
     font-size: 1.8em;
     color:#34495e;
+}
+
+.friend{
+    width:60px;
+    height: 60px;
+    margin-right:60px;
 }
