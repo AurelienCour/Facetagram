@@ -157,6 +157,11 @@ hr{
     color:#34495e;
 }
 
+.profile-name{
+    font-size: 1.5em;
+    color:#34495e;
+}
+
 .friend{
     width:60px;
     height: 60px;
