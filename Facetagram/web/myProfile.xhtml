@@ -9,44 +9,50 @@
     <h:head>
         <title>TODO supply a title</title>
         <link rel="stylesheet" type="text/css" href="res/css/style.css" media="all"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
         <script src="res/Js/sideMenu.js"></script>
     </h:head>
     <h:body>
         
     <ui:include src="header.xhtml" />
-    <!-- content -->
 
-    
-    <div class="ui-g profile">
-        <div class="ui-g-2"><h:outputText value=" #{utilisateurCtrl.connectedUser.prenom}"/></div>
-        <div class="ui-g-2"><h:outputText value=" #{utilisateurCtrl.connectedUser.nom}"/></div>
-        <div class="ui-g-6"></div>
-        <div class="ui-g-2">
-        <h:form>
-            <h:outputLink value="javascript:void(0)" onclick="PF('addImage').show();" title="addImage">
-                <p:graphicImage value="res/Icon/image-add-button.png" style="width:60px;height: 60px;" />
-            </h:outputLink>
-        </h:form>
+    <div class="container-fluid profile">
+        <div class="row align-items-center justify-content-between" style="height: 100%;">
+            <div class="col-md-6">
+                <h:outputText value=" #{utilisateurCtrl.connectedUser.prenom}"/>
+                <h:outputText value=" #{utilisateurCtrl.connectedUser.nom}"/>
+            </div>
+            <div class="col-md-1">
+                <h:form>
+                    <h:outputLink value="javascript:void(0)" onclick="PF('addImage').show();" title="Ajouter une image">
+                        <p:graphicImage value="res/Icon/image-add-button.png" style="width:80%;" />
+                    </h:outputLink>
+                </h:form>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <h3 class="profile-title">MES AMIS</h3> 
+            </div>
+            <p:separator style="width: 100%"/>
         </div>
     </div>
     
-
-
-    <h3 class="profile-title">MES AMIS</h3> 
-    <hr></hr>    
     <div style="margin-top: 5%;font-size: 1em">
         <p:panelGrid columns="3" layout="grid" style="font-size:1.4em;">   
             <h:outputText value="Prenom" style="font-weight: bold;font-size: 1.6em;"/> 
             <h:outputText value="Nom" style="font-weight: bold;font-size: 1.6em;"/> 
             <h:outputText/> 
 
-        <c:forEach items="#{amisCtrl.getAmis(utilisateurCtrl.connectedUser)}" var = "a" >
-            <h:outputText value="#{a.prenom}"/>
-            <h:outputText value="#{a.nom}" style="font-weight: bold"/>
-            <p:commandLink action="#{utilisateurCtrl.setTargetUser(a)}">
-                <p:graphicImage id="open" value="res/Icon/eye-open.png" style="width:60px;height: 60px;" />
-            </p:commandLink>
-        </c:forEach>
+            <c:forEach items="#{amisCtrl.getAmis(utilisateurCtrl.connectedUser)}" var = "a" >
+                <h:outputText value="#{a.prenom}"/>
+                <h:outputText value="#{a.nom}" style="font-weight: bold"/>
+                <p:commandLink action="#{utilisateurCtrl.setTargetUser(a)}">
+                    <p:graphicImage id="open" value="res/Icon/eye-open.png" style="width:60px;height: 60px;" />
+                </p:commandLink>
+            </c:forEach>
         </p:panelGrid>
     </div>
     

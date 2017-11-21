@@ -24,14 +24,18 @@
                     </p:commandLink> 
                 </div>
                 <div class="ui-g-2 name">FaceTagram</div> 
-                    <div class="ui-g-5">
-                    Recherche : <p:autoComplete value="#{utilisateurCtrl.searchUser}" completeMethod="#{utilisateurCtrl.complete}" /><!--<p:inputText id="recherche" value="#{utilisateurCtrl.searchUser}"/>-->
-                        <p:commandLink action="#{utilisateurCtrl.searchUtilisateur()}">
-                            <p:graphicImage id="imageValide" value="res/Icon/checked.png" style="width:25px ;height:25px;margin-left: 5px;margin-bottom: 0;"/>
-                        </p:commandLink>
+                <div class="ui-g-5" style="padding-left: 8%;padding-top: 1.5%;">
+                        <h:panelGrid columns="3" styleClass="ui-noborder" style="background: none;">
+                            Recherche :
+                            <p:autoComplete value="#{utilisateurCtrl.searchUser}" completeMethod="#{utilisateurCtrl.complete}"/>
+                            <p:commandLink action="#{utilisateurCtrl.searchUtilisateur()}" >
+                                <p:graphicImage id="imageValide" value="res/Icon/checked.png" style="width:25px ;height:25px;margin-top: 2px;"/>
+                            </p:commandLink>
+                        </h:panelGrid>
                     </div>
-                <div class="ui-g-2" style="font-size: 1.3em"> Bonjour #{utilisateurCtrl.connectedUser.prenom} ! 
-                    <p:commandButton value="Deconnexion" ajax="false" actionListener="#{utilisateurCtrl.logout()}"/>
+                <div class="ui-g-2" >
+                    <span style="font-size: 1.2em">Bonjour #{utilisateurCtrl.connectedUser.prenom} !</span> 
+                    <p:commandButton class="deconnectionButton" value="Deconnexion" ajax="false" actionListener="#{utilisateurCtrl.logout()}"/>
                 </div>     
             </div>
         </h:form>
