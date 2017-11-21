@@ -38,22 +38,27 @@
             </div>
             <p:separator style="width: 100%"/>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p:panelGrid columns="3" layout="grid" styleClass="ui-noborder" style="font-size:1.4em;">   
+                    <h:outputText value="Prenom" style="font-weight: bold;font-size: 1.6em;"/> 
+                    <h:outputText value="Nom" style="font-weight: bold;font-size: 1.6em;"/> 
+                    <h:outputText/> 
+
+                    <c:forEach items="#{amisCtrl.getAmis(utilisateurCtrl.connectedUser)}" var = "a" >
+                        <h:outputText value="#{a.prenom}"/>
+                        <h:outputText value="#{a.nom}" style="font-weight: bold"/>
+                        <p:commandLink action="#{utilisateurCtrl.setTargetUser(a)}">
+                            <p:graphicImage id="open" value="res/Icon/eye-open.png" style="width:60px;height: 60px;" />
+                        </p:commandLink>
+                    </c:forEach>
+                </p:panelGrid>
+            </div>
+        </div>
     </div>
     
     <div style="margin-top: 5%;font-size: 1em">
-        <p:panelGrid columns="3" layout="grid" style="font-size:1.4em;">   
-            <h:outputText value="Prenom" style="font-weight: bold;font-size: 1.6em;"/> 
-            <h:outputText value="Nom" style="font-weight: bold;font-size: 1.6em;"/> 
-            <h:outputText/> 
-
-            <c:forEach items="#{amisCtrl.getAmis(utilisateurCtrl.connectedUser)}" var = "a" >
-                <h:outputText value="#{a.prenom}"/>
-                <h:outputText value="#{a.nom}" style="font-weight: bold"/>
-                <p:commandLink action="#{utilisateurCtrl.setTargetUser(a)}">
-                    <p:graphicImage id="open" value="res/Icon/eye-open.png" style="width:60px;height: 60px;" />
-                </p:commandLink>
-            </c:forEach>
-        </p:panelGrid>
+        
     </div>
     
     <h3 class="profile-title">MES INFORMATIONS</h3> 

@@ -58,7 +58,7 @@
         <h:form class="row justify-content-around" id="formImage">
 <!--            <p:panelGrid columns="4" layout="grid" styleClass="ui-noborder">-->
                 <c:forEach class="col-md-3 col-lg-3 imageAmis" items="#{imageCtrl.getAllImage(amisCtrl.getAmis(utilisateurCtrl.connectedUser))}" var="img">
-                    <p:panelGrid columns="4" style="border: lightgray solid 0.5px;margin-top: 20px;">
+                    <p:panelGrid columns="4" styleClass="ui-noborder" style="margin-top: 20px;">
                             <f:facet name="header">
                                 <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">
                                     <p:graphicImage value="res/img/#{img.cheminImage}" width="300" height="200"/>
