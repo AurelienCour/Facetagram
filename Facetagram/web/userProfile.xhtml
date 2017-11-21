@@ -9,6 +9,7 @@
     <h:head>
         <title>TODO supply a title</title>
         <link rel="stylesheet" type="text/css" href="res/css/style.css" media="all"/>
+        <script src="res/Js/sideMenu.js"></script>
     </h:head>
     <h:body>
         
@@ -34,7 +35,7 @@
         </div>
         <h:form id="formImage">
             <p:panelGrid columns="4">
-                <c:forEach items="#{utilisateurCtrl.targetUser.imageCollection}" var="img">
+                <c:forEach items="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.targetUser)}" var="img">
                         <p:panelGrid columns="3">
                             <f:facet name="header">
                                 <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">

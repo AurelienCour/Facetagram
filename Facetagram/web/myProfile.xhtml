@@ -16,27 +16,36 @@
     <ui:include src="header.xhtml" />
     <!-- content -->
 
+    
     <div class="ui-g profile">
         <div class="ui-g-2"><h:outputText value=" #{utilisateurCtrl.connectedUser.prenom}"/></div>
         <div class="ui-g-2"><h:outputText value=" #{utilisateurCtrl.connectedUser.nom}"/></div>
+        <div class="ui-g-6"></div>
+        <div class="ui-g-2">
+        <h:form>
+            <h:outputLink value="javascript:void(0)" onclick="PF('addImage').show();" title="addImage">
+                <p:graphicImage value="res/Icon/image-add-button.png" style="width:60px;height: 60px;" />
+            </h:outputLink>
+        </h:form>
+        </div>
     </div>
+    
 
 
     <h3 class="profile-title">MES AMIS</h3> 
     <hr></hr>    
     <div style="margin-top: 5%;font-size: 1em">
-        <p:panelGrid columns="2" layout="grid" style="font-size:1.4em;">   
+        <p:panelGrid columns="3" layout="grid" style="font-size:1.4em;">   
             <h:outputText value="Prenom" style="font-weight: bold;font-size: 1.6em;"/> 
             <h:outputText value="Nom" style="font-weight: bold;font-size: 1.6em;"/> 
+            <h:outputText/> 
 
         <c:forEach items="#{amisCtrl.getAmis(utilisateurCtrl.connectedUser)}" var = "a" >
-
-            <div class="ui-g-2"><h:outputText value="#{a.prenom}"/></div>
-            <div class="ui-g-2"><h:outputText value="#{a.nom}" style="font-weight: bold"/></div>
-            <div class="ui-g-6"></div>
-            <div class="ui-g-2">
-                <h:outputLink value="javascript:void(0)" onclick="PF('addImage').show();" title="addImage">Ajouter une image</h:outputLink>
-            </div>
+            <h:outputText value="#{a.prenom}"/>
+            <h:outputText value="#{a.nom}" style="font-weight: bold"/>
+            <p:commandLink action="#{utilisateurCtrl.setTargetUser(a)}">
+                <p:graphicImage id="open" value="res/Icon/eye-open.png" style="width:60px;height: 60px;" />
+            </p:commandLink>
         </c:forEach>
         </p:panelGrid>
     </div>
@@ -56,7 +65,7 @@
     <hr></hr> 
     <h:form id="formImage">
         <p:panelGrid columns="4">
-            <c:forEach items="#{utilisateurCtrl.connectedUser.imageCollection}" var="img">
+            <c:forEach items="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.connectedUser)}" var="img">
                     <p:panelGrid columns="2">
                         <f:facet name="header">
                             <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">
@@ -84,7 +93,6 @@
                 <p:fileUpload value="#{imageCtrl.file}" mode="simple" skinSimple="true"/>
                 <br/>
                 <p:commandButton value="Ajouter" ajax="false" action="#{imageCtrl.upload(utilisateurCtrl.connectedUser)}"/>
-                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
             </h:panelGrid>
         </p:dialog>
     </h:form>

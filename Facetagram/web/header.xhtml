@@ -9,7 +9,7 @@
     <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
             <a href="Home.xhtml">Home</a>
-            <a href="myProfile.xhtml">Mon profile</a>
+            <a href="myProfile.xhtml">Mon profil</a>
             <h:outputLink value="javascript:void(0)" onclick="PF('addImage').show();" title="addImage">Ajouter une image</h:outputLink>
           </div>
           
@@ -45,7 +45,6 @@
                     <p:fileUpload value="#{imageCtrl.file}" mode="simple" skinSimple="true"/>
                     <br/>
                     <p:commandButton value="Ajouter" ajax="false" action="#{imageCtrl.upload(utilisateurCtrl.connectedUser)}"/>
-                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                 </h:panelGrid>
             </p:dialog>
         </h:form>

@@ -55,8 +55,7 @@ public class ImageCtrl implements Serializable  {
     public List<Image> getAllImage(List<Utilisateur> amis){
         List<Image> img = new ArrayList<>();
         for (Utilisateur ami : amis) {
-             for (Image image : ami.getImageCollection())
-                 img.add(image);
+             img.addAll(getImageUtilisateur(ami));
          } 
         return img;
     }
