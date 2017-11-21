@@ -70,6 +70,7 @@
                         <f:facet name="header">
                             <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">
                                 <p:graphicImage value="res/img/#{img.cheminImage}" width="300" height="200"/>
+                                <f:setPropertyActionListener value="#{img}" target="#{imageCtrl.selectedImage}" />
                             </p:commandLink>
                         </f:facet>
                         <h:outputText value="#{aimerCtrl.getLikeNumber(img)}" />
@@ -77,11 +78,21 @@
                 </p:panelGrid>
             </c:forEach>
         </p:panelGrid>
-        <p:dialog widgetVar="imageBtn" modal="false">
-            <p:outputPanel id="ImgDetail" style="text-align:center;">
-                <h:graphicImage value="res/img/#{imageCtrl.selectedImage.cheminImage}" width="650"/>
-            </p:outputPanel>
-        </p:dialog>
+        <p:dialog widgetVar="imageBtn" modal="true" showEffect="clip" hideEffect="clip"  position="center,top" resizable="false" draggable="false" width="680">
+                <p:outputPanel id="ImgDetail">
+                    <p:scrollPanel style="height: 400px;" mode="native">
+                        <h:graphicImage value="res/img/#{imageCtrl.selectedImage.cheminImage}" width="650"/>
+                    </p:scrollPanel>
+                    <br/>
+                    <p:outputLabel for="like">Like : </p:outputLabel>
+                    <h:outputText value="#{aimerCtrl.getLikeNumber(imageCtrl.selectedImage)}" id="like"/>
+                    <br/>
+                    <p:scrollPanel style="height: 75px;" mode="native">
+                        <p:outputLabel for="Description">Description : </p:outputLabel>
+                        <h:outputText value="#{imageCtrl.selectedImage.descripton}" id="Description"/>
+                    </p:scrollPanel>
+                </p:outputPanel>
+            </p:dialog>
     </h:form>
     
     <h:form enctype="multipart/form-data">
