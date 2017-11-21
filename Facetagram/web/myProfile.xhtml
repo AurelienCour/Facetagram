@@ -114,12 +114,11 @@
                         <h:outputText value="#{aimerCtrl.getLikeNumber(img)}" />
                         <h:outputText value="#{img.myFormattedDate}" />
                         <h:form>
-                            <p:growl id="messages" showDetail="true" />
                             <p:commandButton id="dynaButton" type="button" icon="ui-icon-plusthick" style="border: none; background: none;" />
-                            <p:tieredMenu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="width:200px">
-                                <p:menuitem value="Partager" update="messages" icon="ui-icon-disk" />
-                                <p:menuitem value="Modifier" update="messages" icon="ui-icon-arrowrefresh-1-w" />
-                                <p:menuitem value="Supprimer" update="messages" ajax="false" icon="ui-icon-close" />
+                            <p:tieredMenu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="width:12%">
+                                <p:menuitem value="Partager" icon="ui-icon-disk" />
+                                <p:menuitem value="Modifier" icon="ui-icon-arrowrefresh-1-w" />
+                                <p:menuitem value="Supprimer" ajax="false" icon="ui-icon-close" />
                             </p:tieredMenu>
                         </h:form>
                     </p:panelGrid>
@@ -139,7 +138,6 @@
                 </p:dialog>
             </h:form>
         </div>
-        
 
         <h:form enctype="multipart/form-data">
             <p:dialog header="Inscription" widgetVar="addImage" resizable="false"> 
