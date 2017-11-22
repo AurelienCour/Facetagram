@@ -112,18 +112,22 @@
                             </p:commandLink>
                         </f:facet>
                         <h:outputText value="#{aimerCtrl.getLikeNumber(img)}" />
-                        <h:outputText value="#{img.myFormattedDate}" />
+                        <h:outputText value="#{img.public1}" />
                         <h:form>
-                            <p:commandButton id="dynaButton" type="button" icon="ui-icon-plusthick" style="border: none; background: none;" />
+                            
+                            <p:commandButton id="dynaButton" type="button" icon="ui-icon-plusthick" style="border: none; background: none;"/>
                             <p:tieredMenu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="width:12%">
-                                <p:menuitem value="Partager" icon="ui-icon-disk" />
-                                <p:menuitem value="Modifier" icon="ui-icon-arrowrefresh-1-w" />
+                                <p:menuitem value="Partager" icon="ui-icon-disk" oncomplete="PF('imageBtn').show()" update=":formImage:ImgDetail" action="#{imageCtrl.setSelectedImage(img)}"/>
+                                <p:menuitem value="Modifier" icon="ui-icon-arrowrefresh-1-w" immediate="true" oncomplete="#{imageCtrl.setPrivacy()}" update=":formImage">
+                                    <f:setPropertyActionListener target="#{imageCtrl.selectedImage}"
+                                      value="#{img}" />
+                                </p:menuitem>
                                 <p:menuitem value="Supprimer" ajax="false" icon="ui-icon-close" />
                             </p:tieredMenu>
                         </h:form>
                     </p:panelGrid>
                 </c:forEach>
-                <p:dialog widgetVar="imageBtn" modal="true" showEffect="clip" hideEffect="clip"  position="center,top" resizable="false" draggable="false" width="680">
+                <p:dialog id="testDi" widgetVar="imageBtn" modal="true" showEffect="clip" hideEffect="clip"  position="center,top" resizable="false" draggable="false" width="680">
                     <p:outputPanel id="ImgDetail">
                         <h:graphicImage value="res/img/#{imageCtrl.selectedImage.cheminImage}" width="650"/>
                         <br/>

@@ -5,6 +5,7 @@
  */
 package fr.facetagram.etu.user;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -17,9 +18,12 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.apache.commons.io.FilenameUtils;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.UploadedFile;
 
 
@@ -105,6 +109,11 @@ public class ImageCtrl implements Serializable  {
 
     public void setSelectedImage(Image selectedImage) {
         this.selectedImage = selectedImage;
+    }
+    
+    public void setPrivacy() {
+       // selectedImage.setPublic1(false);
+        daoImage.updateImage(new Image());
     }
     
     public void addVue(){
