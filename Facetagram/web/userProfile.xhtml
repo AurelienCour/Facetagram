@@ -7,8 +7,9 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>TODO supply a title</title>
+        <title>Facetagram</title>
         <link rel="stylesheet" type="text/css" href="res/css/style.css" media="all"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
         <script src="res/Js/sideMenu.js"></script>
     </h:head>
     <h:body>
@@ -16,29 +17,30 @@
         <ui:include src="header.xhtml" />
         
         <div class="ui-g profile">
-            <div class="ui-g-2"><h:outputText value=" #{utilisateurCtrl.targetUser.prenom}"/></div>
-            <div class="ui-g-2"><h:outputText value=" #{utilisateurCtrl.targetUser.nom}"/></div>
-            <div class="ui-g-6"></div>
+            <div class="ui-g-3"><h:outputText value=" #{utilisateurCtrl.targetUser.prenom}"/></div>
+            <div class="ui-g-3"><h:outputText value=" #{utilisateurCtrl.targetUser.nom}"/></div>
+            <div class="ui-g-4"></div>
             <div class="ui-g-2">
-                <c:choose>
-                    <c:when test="#{amisCtrl.getMatchedAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}">
-                        <p:graphicImage class="friend" value="res/Icon/friend.png"/>
-                        <p:commandLink action="#{amisCtrl.removeAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}" onclick="setTimeout(location.reload.bind(location), 500);">
-                            <p:graphicImage id="removeFriend" value="res/Icon/remove-user.png" style="width:60px;height: 60px;" />
-                        </p:commandLink>
-                    </c:when>
-                    <c:otherwise>
-                        <p:commandLink action="#{amisCtrl.addAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}" onclick="setTimeout(location.reload.bind(location), 500);">
-                            <p:graphicImage class="friend" value="res/Icon/addFriend.png"/>
-                        </p:commandLink>
-                    </c:otherwise>
-                </c:choose>                      
+                <h:form>
+                    <c:choose>
+                        <c:when test="#{amisCtrl.getMatchedAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}">
+                            <p:graphicImage class="friend" value="res/Icon/friend.png"/>
+                            <p:commandLink action="#{amisCtrl.removeAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}" ajax="false">
+                                <p:graphicImage id="removeFriend" value="res/Icon/remove-user.png" style="width:60px;height: 60px;" />
+                            </p:commandLink>
+                        </c:when>
+                        <c:otherwise>
+                            <p:commandLink action="#{amisCtrl.addAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}" ajax="false">
+                                <p:graphicImage class="friend" value="res/Icon/addFriend.png"/>
+                            </p:commandLink>
+                        </c:otherwise>
+                    </c:choose>  
+                </h:form>                    
             </div>
         </div>
        
-        <h:form id="formImage">
-            <p:panelGrid columns="4">
-                <c:forEach items="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.targetUser)}" var="img">
+        <h:form class="row justify-content-around formImageProfile" id="formImage">
+                <c:forEach class="col-md-3 col-lg-3" items="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.targetUser)}" var="img">
                         <p:panelGrid columns="3">
                             <f:facet name="header">
                                 <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">
@@ -48,12 +50,12 @@
                             </f:facet>
                         <c:choose>
                             <c:when test="#{utilisateurCtrl.checkImage(img)}">
-                                <p:commandLink action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" onclick="setTimeout(location.reload.bind(location), 500);">
+                                <p:commandLink ajax="false" action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" >
                                     <p:graphicImage id="friend" value="res/Icon/like-red.png" style="width:60px;height: 60px;" />
                                 </p:commandLink>
                             </c:when>
                             <c:otherwise>
-                                <p:commandLink action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}" onclick="setTimeout(location.reload.bind(location), 500);">
+                                <p:commandLink ajax="false" action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}">
                                     <p:graphicImage id="friend" value="res/Icon/like-white.png" style="width:60px;height: 60px;" />
                                 </p:commandLink>
                             </c:otherwise>
@@ -62,7 +64,6 @@
                         <h:outputText value="#{img.myFormattedDate}" />
                     </p:panelGrid>
                 </c:forEach>
-            </p:panelGrid>
             <p:dialog widgetVar="imageBtn" modal="true" showEffect="clip" hideEffect="clip"  position="center,top" resizable="false" draggable="false" width="680">
                 <p:outputPanel id="ImgDetail">
                     <h:graphicImage value="res/img/#{imageCtrl.selectedImage.cheminImage}" width="650"/>

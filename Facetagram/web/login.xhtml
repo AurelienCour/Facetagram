@@ -8,37 +8,31 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
     <h:head> 
         <title>Facetagram</title> 
+        <link rel="stylesheet" type="text/css" href="res/css/style.css" media="all"/>
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"/>
     </h:head> 
-    <h:body>    
- 
-        <h:form> 
-            <center> 
-            <h:panelGrid columns="2" cellpadding="5"> 
-                <f:facet name="header"> 
-                        <h:graphicImage  value="res/Icon/complete-logo.png"/> 
-                </f:facet> 
- 
-                <h:outputLabel for="username" value="Email:" /> 
-                <p:inputText id="username" value="#{utilisateurCtrl.connectedUser.email}" required="true" label="username" /> 
- 
-                <h:outputLabel for="password" value="Mot de passe:" /> 
-                <p:password id="password" value="#{utilisateurCtrl.connectedUser.motDePasse}" required="true" label="password" /> 
- 
-                <f:facet name="footer"> 
-                    <p:commandButton value="Login" ajax="false" actionListener="#{utilisateurCtrl.login(event)}"/> 
-                </f:facet>   
-            </h:panelGrid> 
-            </center> 
-        </h:form> 
-        <h:form> 
-            <center> 
-            <h:outputLink value="javascript:void(0)" onclick="PF('register').show();" title="register"> 
-                <h:outputText value="Inscription"/> 
-            </h:outputLink> 
-            </center> 
-        </h:form> 
-         
-         <!--       Ouverture du panel register--> 
+    <h:body style="background-image: url(res/Icon/plongeur.jpeg)">   
+        <div class="container loginForm">
+            <div class="row justify-content-md-center">
+                <div class="col-sm-6 col-md-4 col-md-offset-4">
+                    <div class="account-wall">
+                        <img class="profile-img" src="res/Icon/logo.png" alt=""/>
+                        <h3 class="name" style="text-align: center;margin-top: 2%;font-size: 2em;">FaceTagram</h3>
+                        <h:form class="form-signin">
+                            <p:inputText id="username" type="text" class="form-control" placeholder="Email" value="#{utilisateurCtrl.connectedUser.email}" required="true"/>
+                            <p:inputText id="password" type="password" value="#{utilisateurCtrl.connectedUser.motDePasse}" class="form-control" placeholder="Mot de passe" required="true"/>
+                            <p:commandButton value="Se connecter" class="btn btn-lg btn-primary" type="submit" ajax="false" actionListener="#{utilisateurCtrl.login(event)}"/>
+                        </h:form>
+                        <h:form>
+                            <h:outputLink value="javascript:void(0)" onclick="PF('register').show();" title="register" style="color:grey;"> 
+                                <h:outputText value="Inscription !"/> 
+                            </h:outputLink> 
+                        </h:form>
+                    </div>
+                </div>
+            </div>          
+        </div>
+
         <h:form> 
             <p:dialog header="Inscription" widgetVar="register" resizable="false"> 
                 <h:panelGrid columns="2" cellpadding="5"> 
@@ -60,8 +54,7 @@
                     </f:facet>  
                 </h:panelGrid> 
             </p:dialog> 
-         </h:form> 
-          
-          
+         </h:form> -->
+
     </h:body> 
 </html> 
