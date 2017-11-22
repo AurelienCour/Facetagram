@@ -5,7 +5,6 @@
  */
 package fr.facetagram.etu.user;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -111,9 +110,9 @@ public class ImageCtrl implements Serializable  {
         this.selectedImage = selectedImage;
     }
     
-    public void setPrivacy() {
-       // selectedImage.setPublic1(false);
-        daoImage.updateImage(new Image());
+    public void setPrivacy(Image selectedImage) {
+        selectedImage.setPublic1(true);
+        //daoImage.updateImage(newImage);
     }
     
     public void addVue(){
