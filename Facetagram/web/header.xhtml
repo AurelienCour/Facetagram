@@ -24,19 +24,39 @@
                     </p:commandLink> 
                 </div>
                 <div class="ui-g-2 name">FaceTagram</div> 
-                <div class="ui-g-5" style="padding-left: 8%">
-                        <h:panelGrid columns="3" styleClass="ui-noborder" style="background: none;margin-top: 2% ">
-                            Recherche :
-                                <p:autoComplete value="#{utilisateurCtrl.searchUser}" completeMethod="#{utilisateurCtrl.complete}"/>                    
-                                <p:commandLink action="#{utilisateurCtrl.searchUtilisateur()}">
-                                    <p:graphicImage id="imageValide" value="res/Icon/checked.png" style="width:25px ;height:25px;margin-top: 2px;"/>
-                                </p:commandLink>
-                        </h:panelGrid>
-                    </div>
-                <div class="ui-g-2" >
-                    <span style="font-size: 1.2em">Bonjour #{utilisateurCtrl.connectedUser.prenom} !</span> 
-                    <p:commandButton class="deconnectionButton" value="Deconnexion" actionListener="#{utilisateurCtrl.logout()}"/>
-                </div>     
+                <c:choose>
+                    <c:when test="#{utilisateurCtrl.connectedUser.admin}">
+                        <div class="ui-g-4" style="padding-left: 8%">
+                            <h:panelGrid columns="3" styleClass="ui-noborder" style="background: none;margin-top: 2% ">
+                                Recherche :
+                                    <p:autoComplete value="#{utilisateurCtrl.searchUser}" completeMethod="#{utilisateurCtrl.complete}"/>                    
+                                    <p:commandLink action="#{utilisateurCtrl.searchUtilisateur()}">
+                                        <p:graphicImage id="imageValide" value="res/Icon/checked.png" style="width:25px ;height:25px;margin-top: 2px;"/>
+                                    </p:commandLink>
+                            </h:panelGrid>
+                        </div>
+                        <div class="ui-g-3" >
+                            <span style="font-size: 1.2em"><span style="font-weight: bold;color: red;"> ADMIN </span>Bonjour #{utilisateurCtrl.connectedUser.prenom}!</span> 
+
+                            <p:commandButton class="deconnectionButton" value="Deconnexion" actionListener="#{utilisateurCtrl.logout()}"/>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="ui-g-5" style="padding-left: 8%">
+                            <h:panelGrid columns="3" styleClass="ui-noborder" style="background: none;margin-top: 2% ">
+                                Recherche :
+                                    <p:autoComplete value="#{utilisateurCtrl.searchUser}" completeMethod="#{utilisateurCtrl.complete}"/>                    
+                                    <p:commandLink action="#{utilisateurCtrl.searchUtilisateur()}">
+                                        <p:graphicImage id="imageValide" value="res/Icon/checked.png" style="width:25px ;height:25px;margin-top: 2px;"/>
+                                    </p:commandLink>
+                            </h:panelGrid>
+                        </div>
+                        <div class="ui-g-2" >
+                            <span style="font-size: 1.2em">Bonjour #{utilisateurCtrl.connectedUser.prenom}!</span> 
+                            <p:commandButton class="deconnectionButton" value="Deconnexion" actionListener="#{utilisateurCtrl.logout()}"/>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </h:form>
     

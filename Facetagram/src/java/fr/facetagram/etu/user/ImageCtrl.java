@@ -55,11 +55,23 @@ public class ImageCtrl implements Serializable  {
         return daoImage.allImageForTheUser(connectedUser);  
     }
     
+    public List<Image> getImageVide(){
+        return new ArrayList<>();
+    }
+    
+    public List<Image> getAllImageAdmin(){
+        return daoImage.allImage();
+    }
+    
     public List<Image> getAllImage(List<Utilisateur> amis){
         List<Image> img = new ArrayList<>();
         for (Utilisateur ami : amis) {
              img.addAll(getImageUtilisateur(ami));
-         } 
+        } 
+        for (Image image : daoImage.getImagePublic()) {
+            if(!img.contains(image))
+                img.add(image);
+        }
         return img;
     }
 

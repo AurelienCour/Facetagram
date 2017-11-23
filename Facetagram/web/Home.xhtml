@@ -56,56 +56,85 @@
             
 
         <h:form class="row justify-content-around formImageHome" id="formImage">
-<!--            <p:panelGrid columns="4" layout="grid" styleClass="ui-noborder">-->
-                <c:forEach class="col-md-3 col-lg-3 imageAmis" items="#{imageCtrl.getAllImage(amisCtrl.getAmis(utilisateurCtrl.connectedUser))}" var="img">
-                    <p:panelGrid columns="4" styleClass="ui-noborder" style="margin-top: 20px;">
+            <c:choose>
+                <c:when test="#{utilisateurCtrl.connectedUser.admin}">
+                    <c:forEach class="col-md-3 col-lg-3 imageAmis" items="#{imageCtrl.getAllImageAdmin()}" var="img">
+                        <p:panelGrid columns="4" styleClass="ui-noborder" style="margin-top: 20px;">
                             <f:facet name="header">
                                 <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">
                                     <p:graphicImage value="res/img/#{img.cheminImage}" width="300" height="200"/>
                                     <f:setPropertyActionListener value="#{img}" target="#{imageCtrl.selectedImage}" />
                                 </p:commandLink>
                             </f:facet>
-                        <c:choose>
-                            <c:when test="#{utilisateurCtrl.checkImage(img)}">
-                                <p:commandLink action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" ajax="false" >
-                                    <p:graphicImage id="friend" value="res/Icon/like-red.png" style="width:40px;height: 40px;" />
+                            <c:choose>
+                                <c:when test="#{utilisateurCtrl.checkImage(img)}">
+                                    <p:commandLink action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" ajax="false" >
+                                        <p:graphicImage id="friend" value="res/Icon/like-red.png" style="width:40px;height: 40px;" />
+                                    </p:commandLink>
+                                </c:when>
+                                <c:otherwise>
+                                    <p:commandLink action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}" ajax="false" >
+                                        <p:graphicImage id="friend" value="res/Icon/like-white.png" style="width:40px;height: 40px;" />
+                                    </p:commandLink>
+                                </c:otherwise>
+                            </c:choose>
+                            <h:outputText value="#{aimerCtrl.getLikeNumber(img)} like" />
+                            <h:outputText value="#{img.myFormattedDate}" />
+                            <h:outputText value="ADMIN"/>
+                        </p:panelGrid>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <c:forEach class="col-md-3 col-lg-3 imageAmis" items="#{imageCtrl.getAllImage(amisCtrl.getAmis(utilisateurCtrl.connectedUser))}" var="img">
+                        <p:panelGrid columns="4" styleClass="ui-noborder" style="margin-top: 20px;">
+                            <f:facet name="header">
+                                <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">
+                                    <p:graphicImage value="res/img/#{img.cheminImage}" width="300" height="200"/>
+                                    <f:setPropertyActionListener value="#{img}" target="#{imageCtrl.selectedImage}" />
                                 </p:commandLink>
-                            </c:when>
-                            <c:otherwise>
-                                <p:commandLink action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}" ajax="false" >
-                                    <p:graphicImage id="friend" value="res/Icon/like-white.png" style="width:40px;height: 40px;" />
-                                </p:commandLink>
-                            </c:otherwise>
-                        </c:choose>
-                        <h:outputText value="#{aimerCtrl.getLikeNumber(img)}" />
-                        <h:outputText value="#{img.myFormattedDate}" />
-                        <h:form>
-                            <p:growl id="messages" showDetail="true" />
-                            <p:commandButton id="dynaButton" type="button" icon="ui-icon-plusthick" style="border: none; background: none;" />
-                            <p:tieredMenu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="width:200px">
-                                <p:menuitem value="Partager" update="messages" icon="ui-icon-disk" />
-                                <p:menuitem value="Modifier" update="messages" icon="ui-icon-arrowrefresh-1-w" />
-                                <c:choose>
-                                    <c:when test="#{utilisateurCtrl.connectedUser.admin}">
-                                        <p:menuitem value="Supprimer" update="messages" ajax="false" icon="ui-icon-close" />
-                                    </c:when>
-                                </c:choose>
-                            </p:tieredMenu>
-                        </h:form>
-                    </p:panelGrid>
-                </c:forEach>
-<!--            </p:panelGrid>-->
+                            </f:facet>
+                            <c:choose>
+                                <c:when test="#{utilisateurCtrl.checkImage(img)}">
+                                    <p:commandLink action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" ajax="false" >
+                                        <p:graphicImage id="friend" value="res/Icon/like-red.png" style="width:40px;height: 40px;" />
+                                    </p:commandLink>
+                                </c:when>
+                                <c:otherwise>
+                                    <p:commandLink action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}" ajax="false" >
+                                        <p:graphicImage id="friend" value="res/Icon/like-white.png" style="width:40px;height: 40px;" />
+                                    </p:commandLink>
+                                </c:otherwise>
+                            </c:choose>
+                            <h:outputText value="#{aimerCtrl.getLikeNumber(img)} like" />
+                            <h:outputText value="#{img.myFormattedDate}" />
+                            <c:choose>
+                                <c:when test="#{img.public1}">
+                                    <h:outputText value="Public" />
+                                </c:when>
+                                <c:otherwise>
+                                    <h:outputText value="Amis" />
+                                </c:otherwise>
+                            </c:choose>
+                        </p:panelGrid>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
             <p:dialog widgetVar="imageBtn" modal="true" showEffect="clip" hideEffect="clip"  position="center,top" resizable="false" draggable="false" width="680">
                 <p:outputPanel id="ImgDetail">
                     <h:graphicImage value="res/img/#{imageCtrl.selectedImage.cheminImage}" width="650"/>
                     <br/>
-                    <p:outputLabel for="like">Like : </p:outputLabel>
-                    <h:outputText value="#{aimerCtrl.getLikeNumber(imageCtrl.selectedImage)}" id="like"/>
+                    <p:outputLabel for="like"><span style="font-weight: bold;">Like :&nbsp;</span></p:outputLabel>
+                    <h:outputText value="#{aimerCtrl.getLikeNumber(imageCtrl.selectedImage)} like" id="like"/>
                     <br/>
-                    <p:scrollPanel style="height: 75px;" mode="native">
-                        <p:outputLabel for="Description">Description : </p:outputLabel>
+                    <p:scrollPanel style="height: 75px;border: 0px;" mode="native">
+                        <p:outputLabel for="Description"><span style="font-weight: bold;">Description :&nbsp;</span></p:outputLabel>
                         <h:outputText value="#{imageCtrl.selectedImage.descripton}" id="Description"/>
                     </p:scrollPanel>
+                    <c:choose>
+                        <c:when test="#{utilisateurCtrl.connectedUser.admin}">
+                            <p:commandButton value="supprimer"  action="#{imageCtrl.suppImage}" ajax="false"/>
+                        </c:when>
+                    </c:choose>
                 </p:outputPanel>
             </p:dialog>
         </h:form>

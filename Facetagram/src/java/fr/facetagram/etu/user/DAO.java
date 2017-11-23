@@ -27,6 +27,11 @@ public class DAO {
         return query.getResultList();
     }
     
+    public List<Image> allImage(){
+        Query query = em.createNamedQuery("Image.findAll");
+        return query.getResultList();
+    }
+    
     public List<Image> allImageForTheUser(Utilisateur connectedUser){
         Query query = em.createNamedQuery("Image.findByIdUtilisateur").setParameter("idUtilisateur", connectedUser);
         List<Image> img = query.getResultList();
@@ -38,6 +43,11 @@ public class DAO {
             return img2;
         }else
            return img; 
+    }
+    
+    public List<Image> getImagePublic(){
+        Query query = em.createNamedQuery("Image.findByPublic1").setParameter("public1", true);
+        return query.getResultList();
     }
     
     public List<Amis> allAmis(Utilisateur user){

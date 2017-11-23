@@ -32,6 +32,7 @@
             </div>
         </div>
         <br/>
+        <br/>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-5">
@@ -69,6 +70,7 @@
                 </div>
             </c:forEach>
         </div>  
+        <br/>
         <br/>
         <div class="container-fluid">
             <div class="row">
@@ -111,8 +113,8 @@
                                 <f:setPropertyActionListener value="#{img}" target="#{imageCtrl.selectedImage}" />
                             </p:commandLink>
                         </f:facet>
-                        <h:outputText value="#{aimerCtrl.getLikeNumber(img)}" />
-                        <h:outputText value="#{img.public1}" />
+                        <h:outputText value="#{aimerCtrl.getLikeNumber(img)} like" />
+                        <h:outputText value="#{img.myFormattedDate}" />
                     </p:panelGrid>
                 </c:forEach>
                 <p:dialog id="testDi" widgetVar="imageBtn" modal="true" showEffect="clip" hideEffect="clip"  position="center,top" resizable="false" draggable="false" width="680">
@@ -122,7 +124,7 @@
                         <p:outputLabel for="like"><span style="font-weight: bold;">Like :&nbsp;</span></p:outputLabel>
                         <h:outputText value="#{aimerCtrl.getLikeNumber(imageCtrl.selectedImage)}" id="like"/>
                         <br/>
-                        <p:scrollPanel style="height: 75px;border:none;" mode="native">
+                        <p:scrollPanel style="height: 75px;border: 0px;" mode="native">
                             <p:outputLabel for="Description"><span style="font-weight: bold;">Description :&nbsp;</span></p:outputLabel>
                             <h:inputTextarea value="#{imageCtrl.selectedImage.descripton}" id="Description" cols="89" rows="3"/>
                         </p:scrollPanel>
