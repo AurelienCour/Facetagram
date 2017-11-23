@@ -47,6 +47,9 @@ import java.text.SimpleDateFormat;
     , @NamedQuery(name = "Image.findByPublic1", query = "SELECT i FROM Image i WHERE i.public1 = :public1")})
 public class Image implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idImage")
+    private Collection<Notification> notificationCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -190,6 +193,15 @@ public class Image implements Serializable {
     @Override
     public String toString() {
         return "fr.facetagram.etu.user.Image[ idImage=" + idImage + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Notification> getNotificationCollection() {
+        return notificationCollection;
+    }
+
+    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+        this.notificationCollection = notificationCollection;
     }
     
 }

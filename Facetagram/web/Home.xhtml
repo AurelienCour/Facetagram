@@ -95,12 +95,12 @@
                             </f:facet>
                             <c:choose>
                                 <c:when test="#{utilisateurCtrl.checkImage(img)}">
-                                    <p:commandLink action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" ajax="false" >
+                                    <p:commandLink action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" actionListener="#{notificationCtrl.addNotif(img, img.idUtilisateur,utilisateurCtrl.connectedUser,'unlike')}" ajax="false" >
                                         <p:graphicImage id="friend" value="res/Icon/like-red.png" style="width:40px;height: 40px;" />
                                     </p:commandLink>
                                 </c:when>
                                 <c:otherwise>
-                                    <p:commandLink action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}" ajax="false" >
+                                    <p:commandLink action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}" actionListener="#{notificationCtrl.addNotif(img, img.idUtilisateur,utilisateurCtrl.connectedUser,'like')}" ajax="false" >
                                         <p:graphicImage id="friend" value="res/Icon/like-white.png" style="width:40px;height: 40px;" />
                                     </p:commandLink>
                                 </c:otherwise>

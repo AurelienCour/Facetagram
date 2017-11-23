@@ -30,7 +30,7 @@
                             </p:commandLink>
                         </c:when>
                         <c:otherwise>
-                            <p:commandLink action="#{amisCtrl.addAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}" ajax="false">
+                            <p:commandLink action="#{notificationCtrl.addNotifAmi(utilisateurCtrl.targetUser,utilisateurCtrl.connectedUser,'ami ?')}" ajax="false">
                                 <p:graphicImage class="friend" value="res/Icon/addFriend.png"/>
                             </p:commandLink>
                         </c:otherwise>
@@ -85,7 +85,8 @@
                     </p:outputPanel>
                 </p:dialog>
             </c:when>
-            <c:otherwise>
+        </c:choose>
+            <c:choose>
                 <c:when test="#{amisCtrl.getMatchedAmi(utilisateurCtrl.connectedUser, utilisateurCtrl.targetUser)}">
                     <c:forEach class="col-md-3 col-lg-3" items="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.targetUser)}" var="img">
                         <p:panelGrid columns="3" styleClass="ui-noborder">
@@ -97,12 +98,12 @@
                             </f:facet>
                             <c:choose>
                                 <c:when test="#{utilisateurCtrl.checkImage(img)}">
-                                    <p:commandLink ajax="false" action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" >
+                                    <p:commandLink ajax="false" action="#{aimerCtrl.removeAimer(utilisateurCtrl.connectedUser,img)}" actionListener="#{notificationCtrl.addNotif(img, img.idUtilisateur,utilisateurCtrl.connectedUser,'unlike')}" >
                                         <p:graphicImage id="friend" value="res/Icon/like-red.png" style="width:60px;height: 60px;" />
                                     </p:commandLink>
                                 </c:when>
                                 <c:otherwise>
-                                    <p:commandLink ajax="false" action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}">
+                                    <p:commandLink ajax="false" action="#{aimerCtrl.addAimer(utilisateurCtrl.connectedUser,img)}" actionListener="#{notificationCtrl.addNotif(img, img.idUtilisateur,utilisateurCtrl.connectedUser,'like')}">
                                         <p:graphicImage id="friend" value="res/Icon/like-white.png" style="width:60px;height: 60px;" />
                                     </p:commandLink>
                                 </c:otherwise>
@@ -130,7 +131,6 @@
                         </p:outputPanel>
                     </p:dialog>
                 </c:when>
-            </c:otherwise>
         </c:choose>
         </h:form>
     </h:body>

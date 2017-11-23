@@ -45,6 +45,8 @@ public class DAO {
            return img; 
     }
     
+    
+    
     public List<Image> getImagePublic(){
         Query query = em.createNamedQuery("Image.findByPublic1").setParameter("public1", true);
         return query.getResultList();
@@ -52,6 +54,11 @@ public class DAO {
     
     public List<Amis> allAmis(Utilisateur user){
         Query query = em.createNamedQuery("Amis.findByIdUser").setParameter("idUtilisateur", user);
+        return query.getResultList();
+    }
+    
+    public List<Notification> allNotifByUser(Utilisateur user){
+        Query query = em.createNamedQuery("Notification.findByUser").setParameter("idUser", user);
         return query.getResultList();
     }
     
@@ -64,6 +71,11 @@ public class DAO {
     
     public void addAmis (Amis ami) {
         em.persist(ami);
+        em.flush();
+    }
+    
+    public void addNotif (Notification notif) {
+        em.persist(notif);
         em.flush();
     }
     
@@ -90,6 +102,21 @@ public class DAO {
     public void removeImage(Image img){
         em.remove(em.merge(img));
         em.flush();
+    }
+    
+    public void removeNotif(Notification notif){
+        em.remove(em.merge(notif));
+        em.flush();
+    }
+    
+    public void removeAmi(Amis ami){
+        em.remove(em.merge(ami));
+        em.flush();
+    }
+    
+    public List<Notification> allNotif(){
+        Query query = em.createNamedQuery("Notification.findAll");
+        return query.getResultList();
     }
 
     public void deleteUtilisateur(Utilisateur user) {

@@ -63,6 +63,15 @@ public class AmisCtrl implements Serializable   {
         
         return true;
     }
+    
+    public void removeAmi(Utilisateur user1,Utilisateur user2){
+        for(Amis ami : dao.allAmis(user2)){
+            if((ami.getIdUtilisateur1().equals(user2) || ami.getIdUtilisateur1().equals(user1)) &&
+                    (ami.getIdUtilisateur2().equals(user2) || ami.getIdUtilisateur2().equals(user1))){
+                dao.removeAmi(ami);
+            }
+        }
+    }
         
     
     

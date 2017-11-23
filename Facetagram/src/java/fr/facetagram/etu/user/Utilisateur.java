@@ -41,6 +41,11 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Utilisateur.findByAdmin", query = "SELECT u FROM Utilisateur u WHERE u.admin = :admin")})
 public class Utilisateur implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idutilisateurSend")
+    private Collection<Notification> notificationCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idutilisateurRetrieve")
+    private Collection<Notification> notificationCollection1;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -204,6 +209,24 @@ public class Utilisateur implements Serializable {
     @Override
     public String toString() {
         return "fr.facetagram.etu.user.Utilisateur[ idUtilisateur=" + idUtilisateur + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Notification> getNotificationCollection() {
+        return notificationCollection;
+    }
+
+    public void setNotificationCollection(Collection<Notification> notificationCollection) {
+        this.notificationCollection = notificationCollection;
+    }
+
+    @XmlTransient
+    public Collection<Notification> getNotificationCollection1() {
+        return notificationCollection1;
+    }
+
+    public void setNotificationCollection1(Collection<Notification> notificationCollection1) {
+        this.notificationCollection1 = notificationCollection1;
     }
     
 }
