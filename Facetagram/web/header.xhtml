@@ -7,100 +7,97 @@
     xmlns:p="http://primefaces.org/ui">
 
     <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
-            <a href="Home.xhtml">Home</a>
-            <a href="myProfile.xhtml">Mon profil</a>
-            <h:outputLink value="javascript:void(0)" onclick="PF('addImage').show();" title="addImage">Ajouter une image</h:outputLink>
-          </div>
-          
-       <h:form id="formRecherche">
-            <div class="ui-g header">
-                <div class="ui-g-1">
-                    <span onclick="openNav()"><p:graphicImage class="navBarButton" value="res\\Icon\\menu-button.png"/></span>
-                </div>
-                <div class="ui-g-2">
-                    <p:commandLink onclick="document.location.href='Home.xhtml'">
-                        <p:graphicImage class="icon" value="res\\Icon\\logo.png"/>
-                    </p:commandLink> 
-                </div>
-                <div class="ui-g-2 name">FaceTagram</div> 
-                <c:choose>
-                    <c:when test="#{utilisateurCtrl.connectedUser.admin}">
-                        <div class="ui-g-4" style="padding-left: 8%">
-                            <h:panelGrid columns="3" styleClass="ui-noborder" style="background: none;margin-top: 2% ">
-                                Recherche :
-                                    <p:autoComplete value="#{utilisateurCtrl.searchUser}" completeMethod="#{utilisateurCtrl.complete}"/>                    
-                                    <p:commandLink action="#{utilisateurCtrl.searchUtilisateur()}">
-                                        <p:graphicImage id="imageValide" value="res/Icon/checked.png" style="width:25px ;height:25px;margin-top: 2px;"/>
-                                    </p:commandLink>
-                            </h:panelGrid>
-                        </div>
-                        <div class="ui-g-3" >
-                            <span style="font-size: 1.2em"><span style="font-weight: bold;color: red;"> ADMIN </span>Bonjour #{utilisateurCtrl.connectedUser.prenom}!</span> 
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">x</a>
+        <a href="Home.xhtml">Home</a>
+        <a href="myProfile.xhtml">Mon profil</a>
+        <h:outputLink value="javascript:void(0)" onclick="PF('addImage').show();" title="addImage">Ajouter une image</h:outputLink>
+    </div>
 
-                            <p:commandButton class="deconnectionButton" value="Deconnexion" actionListener="#{utilisateurCtrl.logout()}"/>
-                        </div>
-                    </c:when>
-                    <c:otherwise>
-                        <div class="ui-g-4" style="padding-left: 8%">
-                            <h:panelGrid columns="3" styleClass="ui-noborder" style="background: none;margin-top: 2% ">
-                                Recherche :
-                                    <p:autoComplete value="#{utilisateurCtrl.searchUser}" completeMethod="#{utilisateurCtrl.complete}"/>                    
-                                    <p:commandLink action="#{utilisateurCtrl.searchUtilisateur()}">
-                                        <p:graphicImage id="imageValide" value="res/Icon/checked.png" style="width:25px ;height:25px;margin-top: 2px;"/>
-                                    </p:commandLink>
-                            </h:panelGrid>
-                        </div>
-                        <div class="ui-g-1">
-                            <h:outputLink value="javascript:void(0)" onclick="PF('notif').show();" title="notifs" style="color:grey;"> 
-                                <p:graphicImage id="notif" value="res/Icon/notif.png" style="width:25px ;height:25px;margin-top: 2px;"/>
-                            </h:outputLink>
-                            <span>#{notificationCtrl.allNotifByUser(utilisateurCtrl.connectedUser).size()}</span>
-                        </div>
-                        <div class="ui-g-2" >
-                            <span style="font-size: 1.2em">Bonjour #{utilisateurCtrl.connectedUser.prenom}!</span> 
-                            <p:commandButton class="deconnectionButton" value="Deconnexion" actionListener="#{utilisateurCtrl.logout()}"/>
-                        </div>
-                    </c:otherwise>
-                </c:choose>
+    <h:form id="formRecherche">
+        <p:growl id="growl" showDetail="true" sticky="true" /> 
+        <div class="ui-g header">
+            <div class="ui-g-1">
+                <span onclick="openNav()"><p:graphicImage class="navBarButton" value="res\\Icon\\menu-button.png"/></span>
             </div>
-        </h:form>
-    
-        <h:form enctype="multipart/form-data">
-            <p:dialog header="Inscription" widgetVar="addImage" resizable="false"> 
-                <h:panelGrid columns="3" cellpadding="5">
-                    <p:outputLabel for="Description">Description :</p:outputLabel>
-                    <p:inputText id="Description" value="#{imageCtrl.newImage.descripton}"/>
-                    <br/>
-                    <p:fileUpload value="#{imageCtrl.file}" mode="simple" skinSimple="true"/>
-                    <br/>
-                    <p:commandButton value="Ajouter" ajax="false" action="#{imageCtrl.upload(utilisateurCtrl.connectedUser)}"/>
-                </h:panelGrid>
-            </p:dialog>
-        </h:form>
-    
-        <h:form> 
-            <p:dialog header="Notifications" widgetVar="notif" resizable="false"> 
-               
-                     
-                    <c:forEach items="#{notificationCtrl.allNotifByUser(utilisateurCtrl.connectedUser)}" var="notif">
-                        <h:outputText value="#{notif.idutilisateurSend.prenom} : "/>
-                        <c:if test="!#{notificationCtrl.checkType(notif)}">
-                            <h:outputText value="#{notif.idImage.cheminImage}"/>
-                        </c:if>
-                        <h:outputText value="#{notif.type}"/>
-                        <c:if test="#{notificationCtrl.checkType(notif)}">
-                            <p:commandButton value="OUI" ajax="false" action="#{notificationCtrl.removeNotif(utilisateurCtrl.connectedUser)}"  actionListener="#{amisCtrl.addAmi(notif.idutilisateurSend, notif.idutilisateurRetrieve)}"/>
-                            <p:commandButton value="NON" ajax="false" actionListener="#{notificationCtrl.removeNotif(utilisateurCtrl.connectedUser)}"/>
-                        </c:if>
-                    </c:forEach>
-                     
-                    <f:facet name="footer"> 
-                        <p:commandButton value="OK" ajax="false" actionListener="#{notificationCtrl.removeNotif(utilisateurCtrl.connectedUser)}"/> 
-                    </f:facet>  
-               
-            </p:dialog> 
-         </h:form> 
+            <div class="ui-g-2">
+                <p:commandLink onclick="document.location.href = 'Home.xhtml'">
+                    <p:graphicImage class="icon" value="res\\Icon\\logo.png"/>
+                </p:commandLink> 
+            </div>
+            <div class="ui-g-2 name">FaceTagram</div> 
+            <c:choose>
+                <c:when test="#{utilisateurCtrl.connectedUser.admin}">
+                    <div class="ui-g-4" style="padding-left: 8%">
+                        <h:panelGrid columns="3" styleClass="ui-noborder" style="background: none;margin-top: 2% ">
+                            Recherche :
+                            <p:autoComplete value="#{utilisateurCtrl.searchUser}" completeMethod="#{utilisateurCtrl.complete}"/>                    
+                            <p:commandLink action="#{utilisateurCtrl.searchUtilisateur()}">
+                                <p:graphicImage id="imageValide" value="res/Icon/checked.png" style="width:25px ;height:25px;margin-top: 2px;"/>
+                            </p:commandLink>
+                        </h:panelGrid>
+                    </div>
+                    <div class="ui-g-3" >
+                        <span style="font-size: 1.2em"><span style="font-weight: bold;color: red;"> ADMIN </span>Bonjour #{utilisateurCtrl.connectedUser.prenom}!</span> 
+
+                        <p:commandButton class="deconnectionButton" value="Deconnexion" actionListener="#{utilisateurCtrl.logout()}"/>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="ui-g-4" style="padding-left: 8%">
+                        <h:panelGrid columns="3" styleClass="ui-noborder" style="background: none;margin-top: 2% ">
+                            Recherche :
+                            <p:autoComplete value="#{utilisateurCtrl.searchUser}" completeMethod="#{utilisateurCtrl.complete}"/>                    
+                            <p:commandLink action="#{utilisateurCtrl.searchUtilisateur()}">
+                                <p:graphicImage id="imageValide" value="res/Icon/checked.png" style="width:25px ;height:25px;margin-top: 2px;"/>
+                            </p:commandLink>
+                        </h:panelGrid>
+                    </div>
+                    <div class="ui-g-1">
+                        <h:outputLink value="javascript:void(0)" onclick="PF('notif').show();" title="notifs" style="color:grey;"> 
+                            <p:graphicImage id="notif" value="res/Icon/notif.png" style="width:25px ;height:25px;margin-top: 2px;"/>
+                        </h:outputLink>
+                        <span>#{notificationCtrl.allNotifByUser(utilisateurCtrl.connectedUser).size()}</span>
+                    </div>
+                    <div class="ui-g-2" >
+                        <span style="font-size: 1.2em">Bonjour #{utilisateurCtrl.connectedUser.prenom}!</span> 
+                        <p:commandButton class="deconnectionButton" value="Deconnexion" actionListener="#{utilisateurCtrl.logout()}"/>
+                    </div>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </h:form>
+
+    <h:form enctype="multipart/form-data">
+        <p:dialog header="Inscription" widgetVar="addImage" resizable="false"> 
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:outputLabel for="Description">Description :</p:outputLabel>
+                <p:inputText id="Description" value="#{imageCtrl.newImage.descripton}"/>
+                <br/>
+                <p:fileUpload value="#{imageCtrl.file}" mode="simple" skinSimple="true"/>
+                <br/>
+                <p:commandButton value="Ajouter" ajax="false" action="#{imageCtrl.upload(utilisateurCtrl.connectedUser)}"/>
+            </h:panelGrid>
+        </p:dialog>
+    </h:form>
+
+    <h:form> 
+        <p:dialog header="Notifications" widgetVar="notif" resizable="false"> 
+            <c:forEach items="#{notificationCtrl.allNotifByUser(utilisateurCtrl.connectedUser)}" var="notif">
+                <h:outputText value="#{notif.idutilisateurSend.prenom} : "/>
+                <c:if test="!#{notificationCtrl.checkType(notif)}">
+                    <h:outputText value="#{notif.idImage.cheminImage}"/>
+                </c:if>
+                <h:outputText value="#{notif.type}"/>
+                <c:if test="#{notificationCtrl.checkType(notif)}">
+                    <p:commandButton value="OUI" ajax="false" action="#{notificationCtrl.removeNotif(utilisateurCtrl.connectedUser)}"  actionListener="#{amisCtrl.addAmi(notif.idutilisateurSend, notif.idutilisateurRetrieve)}"/>
+                    <p:commandButton value="NON" ajax="false" actionListener="#{notificationCtrl.removeNotif(utilisateurCtrl.connectedUser)}"/>
+                </c:if>
+            </c:forEach>
+            <f:facet name="footer"> 
+                <p:commandButton value="OK" ajax="false" actionListener="#{notificationCtrl.removeNotif(utilisateurCtrl.connectedUser)}"/> 
+            </f:facet>  
+        </p:dialog> 
+    </h:form> 
 
 
 </ui:composition>

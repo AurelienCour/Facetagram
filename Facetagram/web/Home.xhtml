@@ -13,22 +13,31 @@
         <script src="res/Js/sideMenu.js"></script>
     </h:head>
     <h:body>
-         
+
         <ui:include src="header.xhtml" />
 
         <div class="container-fluid container-top-home">
             <div class="row align-items-center">      
                 <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carousel"> <!--style="align-content: center;margin-top:10px;margin-left:-7px;"-->
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 carousel">
                         <h:form id="form">
-                            <p:galleria value="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.connectedUser)}" var="image" panelWidth="950" panelHeight="600" showCaption="true">
-                                <p:graphicImage value="res/img/#{image.cheminImage}" alt="#{image.descripton}" title="" width="950" height="600"/>
-                            </p:galleria>
+                            <c:choose>
+                                <c:when test="#{imageCtrl.isImageAvailable(utilisateurCtrl.connectedUser)}">
+                                    <p:galleria value="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.connectedUser)}" var="image" panelWidth="950" panelHeight="600" showCaption="true">
+                                        <p:graphicImage value="res/img/#{image.cheminImage}" alt="#{image.descripton}" title="" width="950" height="600"/>
+                                    </p:galleria>
+                                </c:when>
+                                <c:otherwise>
+                                    <p:galleria value="#{imageCtrl.getImageEmpty()}" var="image" panelWidth="950" panelHeight="600" showCaption="true">
+                                        <p:graphicImage value="res/Icon/#{image.cheminImage}" alt="Veuillez ajouter des images" title="" width="950" height="600"/>
+                                    </p:galleria>
+                                </c:otherwise>
+                            </c:choose>
                         </h:form>
                     </div>
                 </div>
                 <div class="col-md-3 col-lg-3 row-4 container-counter">
-            
+
                     <div class="col-md-12 col-lg-12 col-fluid row counter">
                         <div class="col-md-12 col-lg-12">MON NOMBRE DE VUES</div>
                         <div class="col-md-6 col-lg-6" style="font-size:4em;">#{utilisateurCtrl.nbTotVue}</div>
@@ -53,7 +62,7 @@
 
             </div>
         </div>
-            
+
 
         <h:form class="row justify-content-around formImageHome" id="formImage">
             <c:choose>

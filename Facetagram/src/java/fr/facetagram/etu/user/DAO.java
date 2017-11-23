@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -45,7 +46,16 @@ public class DAO {
            return img; 
     }
     
-    
+    public Utilisateur getUserByEmail(String email){
+        Utilisateur user;
+        Query query = em.createNamedQuery("Utilisateur.findByEmail").setParameter("email", email);
+        try {
+            user = (Utilisateur) query.getSingleResult();
+        } catch (NoResultException e) {
+            user = null;
+        }   
+        return user;
+    }
     
     public List<Image> getImagePublic(){
         Query query = em.createNamedQuery("Image.findByPublic1").setParameter("public1", true);

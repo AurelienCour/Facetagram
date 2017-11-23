@@ -19,6 +19,7 @@
                         <img class="profile-img" src="res/Icon/logo.png" alt=""/>
                         <h3 class="name" style="text-align: center;margin-top: 2%;font-size: 2em;">FaceTagram</h3>
                         <h:form class="form-signin">
+                            <p:growl id="growl" showDetail="true" sticky="true" /> 
                             <p:inputText id="username" type="text" class="form-control" placeholder="Email" value="#{utilisateurCtrl.connectedUser.email}" required="true"/>
                             <p:inputText id="password" type="password" value="#{utilisateurCtrl.connectedUser.motDePasse}" class="form-control" placeholder="Mot de passe" required="true"/>
                             <p:commandButton value="Se connecter" class="btn btn-lg btn-primary" type="submit" ajax="false" actionListener="#{utilisateurCtrl.login(event)}"/>

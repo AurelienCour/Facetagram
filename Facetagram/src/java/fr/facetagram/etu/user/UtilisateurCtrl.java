@@ -146,22 +146,37 @@ public class UtilisateurCtrl implements Serializable {
      
      public void login(ActionEvent event) throws IOException {
         List<Utilisateur> utilisateurs = getUtilisateurs();
+        boolean find = false;
         for(Utilisateur u : utilisateurs){
             if(u.getEmail().equals(connectedUser.getEmail()) && u.getMotDePasse().equals(connectedUser.getMotDePasse()) ){
                 connecte = true;
                 connectedUser = u;
                 majStat();
-                FacesContext.getCurrentInstance().getExternalContext().redirect("Home.xhtml");
+                find = true;
             }
+        }
+        if(!find)
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Attention", "Login ou Mot de passe incorrect"));
+        else{
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Bienvenue "+connectedUser.getPrenom()));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("Home.xhtml");
         }
     }    
  
     public void register(ActionEvent event) throws IOException {     
-        if(connectedUser.getEmail() != null && connectedUser.getMotDePasse()!= null) {
-            connecte = true;
-            daoUtilisateur.addUtilisateur(this.connectedUser);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("Home.xhtml");
-        }
+        if(!connectedUser.getMotDePasse().trim().isEmpty() && !connectedUser.getEmail().trim().isEmpty()) {
+            if(daoUtilisateur.getUserByEmail(connectedUser.getEmail()) == null){
+                connecte = true;
+                daoUtilisateur.addUtilisateur(this.connectedUser);
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.getExternalContext().getFlash().setKeepMessages(true);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Bienvenue sur Facetagram, vous pouvez à présent vous connectez."));
+            } else
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Email déja utilisé"));
+        } else
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Email ou Mot de passe vide"));
     } 
 
     public String getSearchUser() {
@@ -223,6 +238,9 @@ public class UtilisateurCtrl implements Serializable {
     
     public void logout() throws IOException{
         connectedUser = new Utilisateur();
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().getFlash().setKeepMessages(true);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Vous avez été déconnecté"));
         FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
     }
     

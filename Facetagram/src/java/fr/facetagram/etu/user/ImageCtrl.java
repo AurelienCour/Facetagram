@@ -63,6 +63,18 @@ public class ImageCtrl implements Serializable  {
         return daoImage.allImage();
     }
     
+    public boolean isImageAvailable(Utilisateur connectedUser){
+        return !getImageUtilisateur(connectedUser).isEmpty();
+    }
+    
+    public List<Image> getImageEmpty(){
+        List<Image> img = new ArrayList<>();
+        Image imgEmpty = new Image();
+        imgEmpty.setCheminImage("noImage.jpg");
+        img.add(imgEmpty);
+        return img;
+    }
+    
     public List<Image> getAllImage(List<Utilisateur> amis){
         List<Image> img = new ArrayList<>();
         for (Utilisateur ami : amis) {
