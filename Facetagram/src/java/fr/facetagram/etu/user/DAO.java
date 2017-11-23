@@ -76,10 +76,13 @@ public class DAO {
         em.merge(img);
         em.flush();
     }
+    
+    public void removeImage(Image img){
+        em.remove(em.merge(img));
+        em.flush();
+    }
 
     public void deleteUtilisateur(Utilisateur user) {
-        //Query query = em.createNamedQuery("Etudiant.findById").setParameter("id", etu.getId());
-        //em.remove(query.getSingleResult());
         em.remove(em.merge(user));
         em.flush();
     }

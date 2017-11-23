@@ -110,9 +110,12 @@ public class ImageCtrl implements Serializable  {
         this.selectedImage = selectedImage;
     }
     
-    public void setPrivacy(Image selectedImage) {
-        selectedImage.setPublic1(true);
-        //daoImage.updateImage(newImage);
+    public void modifImage(){
+        daoImage.updateImage(selectedImage);
+    }
+    
+    public void suppImage(){
+        daoImage.removeImage(selectedImage);
     }
     
     public void addVue(){

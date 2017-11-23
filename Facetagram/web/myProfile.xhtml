@@ -104,7 +104,7 @@
             </div>
             <h:form class="row justify-content-around" id="formImage">
                 <c:forEach items="#{imageCtrl.getImageUtilisateur(utilisateurCtrl.connectedUser)}" var="img">
-                    <p:panelGrid columns="3" styleClass="ui-noborder" style="margin-top: 20px;">
+                    <p:panelGrid columns="2" styleClass="ui-noborder" style="margin-top: 20px;">
                         <f:facet name="header">
                             <p:commandLink update=":formImage:ImgDetail" oncomplete="PF('imageBtn').show()">
                                 <p:graphicImage value="res/img/#{img.cheminImage}" width="300" height="200"/>
@@ -113,25 +113,28 @@
                         </f:facet>
                         <h:outputText value="#{aimerCtrl.getLikeNumber(img)}" />
                         <h:outputText value="#{img.public1}" />
-                        <p:commandButton id="dynaButton" type="button" icon="ui-icon-plusthick" style="border: none; background: none;"/>
-                        <p:tieredMenu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="width:12%">
-                            <p:menuitem value="Partager" icon="ui-icon-disk" oncomplete="PF('imageBtn').show()" update=":formImage:ImgDetail" action="#{imageCtrl.setSelectedImage(img)}"/>
-                            <p:menuitem value="Modifier" icon="ui-icon-arrowrefresh-1-w" actionListener="#{imageCtrl.setPrivacy(img.idImage)}" ajax="false" update=":formImage"/>
-                            <p:menuitem value="Supprimer" ajax="false" icon="ui-icon-close" />
-                        </p:tieredMenu>
                     </p:panelGrid>
                 </c:forEach>
                 <p:dialog id="testDi" widgetVar="imageBtn" modal="true" showEffect="clip" hideEffect="clip"  position="center,top" resizable="false" draggable="false" width="680">
                     <p:outputPanel id="ImgDetail">
                         <h:graphicImage value="res/img/#{imageCtrl.selectedImage.cheminImage}" width="650"/>
                         <br/>
-                        <p:outputLabel for="like">Like :&nbsp;</p:outputLabel>
+                        <p:outputLabel for="like"><span style="font-weight: bold;">Like :&nbsp;</span></p:outputLabel>
                         <h:outputText value="#{aimerCtrl.getLikeNumber(imageCtrl.selectedImage)}" id="like"/>
                         <br/>
-                        <p:scrollPanel style="height: 75px;" mode="native">
-                            <p:outputLabel for="Description">Description :&nbsp;</p:outputLabel>
-                            <h:outputText value="#{imageCtrl.selectedImage.descripton}" id="Description"/>
+                        <p:scrollPanel style="height: 75px;border:none;" mode="native">
+                            <p:outputLabel for="Description"><span style="font-weight: bold;">Description :&nbsp;</span></p:outputLabel>
+                            <h:inputTextarea value="#{imageCtrl.selectedImage.descripton}" id="Description" cols="89" rows="3"/>
                         </p:scrollPanel>
+                        <h:panelGrid columns="2" style="margin-left: -5px;" cellpadding="5">
+                            <p:outputLabel for="privacy"><span style="font-weight: bold;">Confidentialité :&nbsp;</span></p:outputLabel>
+                            <p:selectOneRadio id="privacy" value="#{imageCtrl.selectedImage.public1}">
+                                <f:selectItem itemValue="#{true}" itemLabel="Public"/>
+                                <f:selectItem itemValue="#{false}" itemLabel="Privée" />
+                            </p:selectOneRadio>
+                        </h:panelGrid>
+                        <p:commandButton icon="ui-icon-check" value="valider" action="#{imageCtrl.modifImage}" ajax="false"/>
+                        <p:commandButton value="supprimer"  action="#{imageCtrl.suppImage}" ajax="false"/>
                     </p:outputPanel>
                 </p:dialog>
             </h:form>
